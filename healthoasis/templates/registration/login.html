@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}
+<title>Sign-in</title>
+{% endblock title%}
+
+{% block content %}
+<section>
+    <h2>Log In</h2>
+    <!-- Login form -->
+    <form method="post">
+        <!-- Security token -->
+        {% csrf_token %}
+        <!-- Using the formset -->
+        {{ form.as_p }}
+        <button type="submit">Log In</button>
+    </form>
+    <br><br><br><br>
+    <h3>Don't have an account?</h3>
+    <button onclick="location.href='/signup'">Register</button>
+</section>
+{% endblock content %}

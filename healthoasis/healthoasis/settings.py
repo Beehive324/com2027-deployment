@@ -29,6 +29,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Redirects for when a user logs in/out
+LOGIN_REDIRECT_URL = "/home"
+LOGOUT_REDIRECT_URL = "/home"
 
 # Application definition
 
