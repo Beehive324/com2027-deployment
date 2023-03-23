@@ -12,10 +12,13 @@ import requests
 
 #View for homepage
 def home(request):
-    response = requests.get('http://api.weatherapi.com/v1/current.json?key=59208b37dbca49ae860121639231003&q=London&aqi=no')
+    response = requests.get('http://api.weatherapi.com/v1/current.json?key=59208b37dbca49ae860121639231003&q=Guildford&aqi=no')
     weather = response.json()
     context = {'location':(weather['location']['name'] + ", " + weather['location']['country']),
-               'condition':weather['current']['condition']['text']}
+               'condition':weather['current']['condition']['text'],
+               'temp':weather['current']['temp_c'],
+               'feelslike':weather['current']['feelslike_c'],
+               }
     return render(request, 'homeapp/home.html', context)
 
 #View to register a user
