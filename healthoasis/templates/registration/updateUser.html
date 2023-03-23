@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}
+<title>Update Details</title>
+{% endblock title%}
+
+{% block content %}
+<section>
+    <h2>Update your details</h2>
+    <!-- Update user form -->
+    <form method="post">
+        <!-- Security token -->
+        {% csrf_token %}
+        <!-- Using the formset -->
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</section>
+{% endblock content %}

@@ -18,8 +18,12 @@ from django.urls import path, include
 import homeapp, homeapp.views
 
 urlpatterns = [
-    path('accounts/', include('django.contrib.auth.urls')), #Accounts, used to login (accounts/login)
-        path('signup/', homeapp.views.RegisterUser.as_view(), name='signup_user'), #Signup page
     path('admin/', admin.site.urls),
-    path('home/', include('homeapp.urls')), #Homepage
+    path('home/', include('homeapp.urls')), #
+
+    #Account related URLs:
+    path('accounts/', include('django.contrib.auth.urls')), #Accounts, used to login (accounts/login)
+    path('signup/', homeapp.views.RegisterUser.as_view(), name='signup_user'), #Signup page
+    path('accounts/edit/', homeapp.views.updateUser, name="updateUser"),
+    path('accounts/delete/', homeapp.views.deleteUser, name="deleteUser"),
 ]

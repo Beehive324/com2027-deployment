@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 
 from .models import *
 from .forms import *
@@ -27,3 +28,27 @@ class RegisterUser(CreateView):
     form_class = UserCreationWithEmailForm
     template_name = 'registration/register.html'
     success_url = reverse_lazy('login')
+
+    #View to update User record
+@login_required
+def updateUser(request):
+    context={}
+    user = request.user
+    form = UserCreationWithEmailForm(request.POST or None, instance = user)
+    if form.is_valid():
+        #Overwrite existing record
+        form.save()
+        return redirect('/home')
+    context["form"] = form
+    return render(request, "registration/updateUser.html", context)
+
+#View to delete User
+@login_required
+def deleteUser(request):
+    context={}
+    user = request.user
+    if request.method == "POST":
+        #Delete record
+        user.delete()
+        return redirect('/home')
+    return render(request, "registration/deleteUser.html", context)
