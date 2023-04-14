@@ -28,7 +28,7 @@ def __str__(self):
 
 
 class UserActivity(models.Model):
-    user = models.OneToOneFIeld(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     active = models.BooleanField(default=False)
 
     def __str__(self):
@@ -51,7 +51,15 @@ class Exercise(models.Model):
     def __str__(self):
         return self.name
 
-class UserWorkouts(modes.Model):
+
+class Workout(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+class UserWorkouts(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     workout = models.ForeignKey(Workout, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
@@ -60,14 +68,6 @@ class UserWorkouts(modes.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.workout.name} ({self.date})"
-
-
-class Workout(models.Model):
-    name = models.CharField(max_length=50)
-    description = models.TextField()
-
-    def __str__(self):
-        return self.name
 
 
 class UserNutrition(models.Model):
