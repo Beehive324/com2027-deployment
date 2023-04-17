@@ -29,7 +29,7 @@ class RegisterUser(CreateView):
     template_name = 'registration/register.html'
     success_url = reverse_lazy('login')
 
-    #View to update User record
+#View to update User record
 @login_required
 def updateUser(request):
     context={}
