@@ -130,8 +130,8 @@ STATICFILES_DIRS =[os.path.join(BASE_DIR, "static"), 'static']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_ROOT = BASE_DIR / 'static'
-SASS_PROCESSOR_ROOT = STATIC_ROOT
+# STATIC_ROOT = BASE_DIR / 'static'
+# SASS_PROCESSOR_ROOT = STATIC_ROOT
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
