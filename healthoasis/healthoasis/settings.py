@@ -37,6 +37,7 @@ LOGOUT_REDIRECT_URL = "/home"
 
 INSTALLED_APPS = [
     'homeapp.apps.HomeappConfig',
+    'sass_processor',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -128,3 +129,12 @@ STATICFILES_DIRS =[os.path.join(BASE_DIR, "static"), 'static']
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATIC_ROOT = BASE_DIR / 'static'
+SASS_PROCESSOR_ROOT = STATIC_ROOT
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder',
+]
