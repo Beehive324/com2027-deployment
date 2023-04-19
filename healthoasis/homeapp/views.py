@@ -8,9 +8,8 @@ from .models import *
 from .forms import *
 
 import requests
-# Create your views here.
 
-#WeatherAPI direction map
+#WeatherAPI direction dictionary
 dir = {
     'NW':'north-West',
     'N':'North',
@@ -32,21 +31,22 @@ nutritionEndPt = 'https://trackapi.nutritionix.com/v2/natural/nutrients'
 
 #View for homepage
 def home(request):
-    #WeatherAPI getter
+    #WeatherAPI data getter
     weatherResponse = requests.get('http://api.weatherapi.com/v1/current.json?key=59208b37dbca49ae860121639231003&q=Guildford&aqi=no')
     weather = weatherResponse.json()
 
-    try:
+    try:    #Try to format wind direction nicely
         windDir = dir[weather['current']['wind_dir']]
-    except:
+    except: #Not in pre-def dictionary? Keep as-is
         windDir = weather['current']['wind_dir']
 
-    #NutritionAPI getter
+    #NutritionAPI data getter
     query = {
         "query":"big mac"
     }
     nutritionResponse = requests.post(nutritionEndPt, headers=headers, json=query)
     nutrition = nutritionResponse.json()
+    #Extract info from request
     for food in nutrition['foods']:
         name = food['food_name']
         cals = round(food['nf_calories'])
