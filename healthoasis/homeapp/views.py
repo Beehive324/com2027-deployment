@@ -10,15 +10,60 @@ from .forms import *
 import requests
 # Create your views here.
 
+#WeatherAPI direction map
+dir = {
+    'NW':'north-West',
+    'N':'North',
+    'NE':'North-East',
+    'E':'East',
+    'SE':'South-East',
+    'S':'South',
+    'SW':'South-West',
+    'W':'West'
+}
+
+#Nutrition API variables
+nutritionAppID = '3cb0640e'
+nutritionKey = 'c3fb87d22654be6672e1b78518bd7028'
+headers = {'x-app-id':nutritionAppID,
+           'x-app-key':nutritionKey,
+           'content-type':'application/json'}
+nutritionEndPt = 'https://trackapi.nutritionix.com/v2/natural/nutrients'
 
 #View for homepage
 def home(request):
-    response = requests.get('http://api.weatherapi.com/v1/current.json?key=59208b37dbca49ae860121639231003&q=Guildford&aqi=no')
-    weather = response.json()
+    #WeatherAPI getter
+    weatherResponse = requests.get('http://api.weatherapi.com/v1/current.json?key=59208b37dbca49ae860121639231003&q=Guildford&aqi=no')
+    weather = weatherResponse.json()
+
+    try:
+        windDir = dir[weather['current']['wind_dir']]
+    except:
+        windDir = weather['current']['wind_dir']
+
+    #NutritionAPI getter
+    query = {
+        "query":"big mac"
+    }
+    nutritionResponse = requests.post(nutritionEndPt, headers=headers, json=query)
+    nutrition = nutritionResponse.json()
+    for food in nutrition['foods']:
+        name = food['food_name']
+        cals = round(food['nf_calories'])
+        fat = food['nf_saturated_fat']
+
+    #Pass context into template
     context = {'location':(weather['location']['name'] + ", " + weather['location']['country']),
                'condition':weather['current']['condition']['text'],
                'temp':weather['current']['temp_c'],
                'feelslike':weather['current']['feelslike_c'],
+               'wind_mph':weather['current']['wind_mph'],
+                'wind_dir':windDir,
+               'vis':weather['current']['vis_miles'],
+
+               'nName':name,
+               'nCals':cals,
+               'nFat':fat
                }
     return render(request, 'homeapp/home.html', context)
 
