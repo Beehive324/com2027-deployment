@@ -5,6 +5,13 @@
 
 {% block content %}
 <h1>Homepage</h1>
+
+{% block weatherAPI %}
 <p>Current weather conditions for {{ location }}: {{condition}}</p>
-<p>Temperature (C): {{temp}} - feels like {{feelslike}}</p>
+<p>Temperature (C): {{temp}} (Feels: {{feelslike}})</p>
+<p>Wind: {{wind_mph}}mph ({{wind_dir}})</p><p>Visibility: {{vis}} miles</p>
+<p>Example food: {{nName}} contains {{nCals}} calories, {{nFat}} fats</p>
+<p>Example exercise: Excersise "{{eType}}" - Calories burnt {{burntCals}}</p>
+{% endblock weatherAPI %}
+
 {% endblock content %}
