@@ -28,6 +28,7 @@ headers = {'x-app-id':nutritionAppID,
            'x-app-key':nutritionKey,
            'content-type':'application/json'}
 nutritionEndPt = 'https://trackapi.nutritionix.com/v2/natural/nutrients'
+exerciseEndPt = 'https://trackapi.nutritionix.com/v2/natural/exercise'
 
 #View for homepage
 def home(request):
@@ -41,16 +42,31 @@ def home(request):
         windDir = weather['current']['wind_dir']
 
     #NutritionAPI data getter
-    query = {
+    nQuery = {
         "query":"big mac"
     }
-    nutritionResponse = requests.post(nutritionEndPt, headers=headers, json=query)
+    nutritionResponse = requests.post(nutritionEndPt, headers=headers, json=nQuery)
     nutrition = nutritionResponse.json()
     #Extract info from request
     for food in nutrition['foods']:
         name = food['food_name']
         cals = round(food['nf_calories'])
         fat = food['nf_saturated_fat']
+
+    eQuery = {
+        'query':'ran 5 miles',
+        'gender':'male',
+        'weight_kg':'85',
+        'height_cm':'175',
+        'age':20
+    }
+    exerciseResponse = requests.post(exerciseEndPt, headers=headers, json=eQuery)
+    exercise = exerciseResponse.json()
+    #Extract info from request
+    print(exercise)
+    for e in exercise['exercises']:
+        type = e['user_input']
+        burntCals = e['nf_calories']
 
     #Pass context into template
     context = {'location':(weather['location']['name'] + ", " + weather['location']['country']),
@@ -63,8 +79,11 @@ def home(request):
 
                'nName':name,
                'nCals':cals,
-               'nFat':fat
-               }
+               'nFat':fat,
+
+               'burntCals':burntCals,
+               'eType':type
+    }
     return render(request, 'homeapp/home.html', context)
 
 #View to register a user
