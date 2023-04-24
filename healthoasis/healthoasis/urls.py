@@ -30,4 +30,7 @@ urlpatterns = [
     path('accounts/signup/', homeapp.views.RegisterUser.as_view(), name='signup_user'), #Signup page
     path('accounts/edit/', homeapp.views.updateUser, name="updateUser"),
     path('accounts/delete/', homeapp.views.deleteUser, name="deleteUser"),
+    path('workoutlog/add/', homeapp.views.addWorkout, name='addWorkout'),
+    path('workoutlog/edit', homeapp.views.editWorkout, name='editWorkout'),
+    path('workoutlog/delete', homeapp.views.deleteWorkout, name='deleteWorkout'),
 ]
