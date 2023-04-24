@@ -21,9 +21,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', include('homeapp.urls')), #
 
+    
+
     #Account related URLs:
     path('accounts/', include('django.contrib.auth.urls')), #Accounts, used to login (accounts/login)
-    path('signup/', homeapp.views.RegisterUser.as_view(), name='signup_user'), #Signup page
+    path('accounts/signup/', homeapp.views.RegisterUser.as_view(), name='signup_user'), #Signup page
     path('accounts/edit/', homeapp.views.updateUser, name="updateUser"),
     path('accounts/delete/', homeapp.views.deleteUser, name="deleteUser"),
 ]
