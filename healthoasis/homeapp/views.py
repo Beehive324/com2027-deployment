@@ -4,6 +4,12 @@ from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 
+from .models import User, Exercise, UserWorkouts
+
+from django.shortcuts import get_object_or_404, redirect, render
+
+
+
 from .models import *
 from .forms import *
 
@@ -118,3 +124,47 @@ def deleteUser(request):
         user.delete()
         return redirect('/home')
     return render(request, "registration/deleteUser.html", context)
+
+
+#View to add a workout
+@login_required
+def addWorkout(request):
+    context = {}
+    if request.method == 'POST':
+        user_id = request.POST['user_id']
+        exercise_id = request.POST['exercise_id']
+        date = request.POST['date']
+        duration = request.POST['duration']
+        user = get_object_or_404(User, id=user_id)
+        exercise = get_object_or_404(Exercise, id=exercise_id)
+        workout = UserWorkouts(user = user, exercise=exercise, date=date, duration=duration)
+        workout.save()
+        return redirect('/home')
+    else:
+        return render(request, 'workoutlog/add.html', context)
+
+#View to edit a workout
+
+@login_required
+def editWorkout(request, workout_id):
+    workout = get_object_or_404(UserWorkouts, id=workout_id)
+    if request.method == 'POST':
+        date = request.POST['date']
+        duration = request.POST['duration']
+        workout.date = date
+        workout.duration = duration
+        workout.save()
+        return redirect('/home')
+    else:
+        return render(request, 'workoutlog/edit.html', {'workout': workout})
+
+#View to delete a workout
+@login_required
+
+def deleteWorkout(request, workout_id):
+    workout = get_object_or_404(UserWorkouts, id=workout_id)
+    if request.method == 'POST':
+        workout.delete()
+        return redirect('success_page')
+    else:
+        return render(request, 'workoutlog/delete.html', {'workout': workout})
