@@ -52,6 +52,7 @@ def home(request):
         name = food['food_name']
         cals = round(food['nf_calories'])
         fat = food['nf_saturated_fat']
+        photo = food['photo']['highres']
 
     eQuery = {
         'query':'ran 5 miles',
@@ -80,6 +81,7 @@ def home(request):
                'nName':name,
                'nCals':cals,
                'nFat':fat,
+               'nImg':photo,
 
                'burntCals':burntCals,
                'eType':type
