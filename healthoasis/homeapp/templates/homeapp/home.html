@@ -6,14 +6,13 @@
 {% block content %}
 <h1>Homepage</h1>
 
-{% block weatherAPI %}
+
 <section>
 <h2>Weather</h2>
     <p>Current weather conditions for {{ location }}: {{condition}}</p>
 <p>Temperature (C): {{temp}} (Feels: {{feelslike}})</p>
 <p>Wind: {{wind_mph}}mph ({{wind_dir}})</p><p>Visibility: {{vis}} miles</p>
 </section>
-{% endblock weatherAPI %}
 
 <section>
     <h2>Food</h2>

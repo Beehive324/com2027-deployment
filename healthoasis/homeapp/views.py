@@ -11,7 +11,7 @@ import requests
 
 #WeatherAPI direction dictionary
 dir = {
-    'NW':'north-West',
+    'NW':'North-West',
     'N':'North',
     'NE':'North-East',
     'E':'East',

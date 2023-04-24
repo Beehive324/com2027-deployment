@@ -20,7 +20,7 @@ import homeapp, homeapp.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', lambda reuqest: redirect('home/', permanent=False)),
+    path('', lambda reuqest: redirect('home/', permanent=False)),   #redirect empty URL to home
     path('home/', include('homeapp.urls')), #
     
     
