@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1>Health Quiz</h1>
+	<form>
+		<label for="age">Age:</label>
+		<input type="number" id="age" name="age" required><br><br>
+		
+		<label for="weight">Weight (kg):</label>
+		<input type="number" id="weight" name="weight" step="0.01" required><br><br>
+		
+		<label for="height">Height (cm):</label>
+		<input type="number" id="height" name="height" step="0.01" required><br><br>
+		
+		<label for="activity-level">Activity Level:</label>
+		<select id="activity-level" name="activity-level" required>
+			<option value="" selected disabled hidden>Select Activity Level</option>
+			<option value="1">Sedentary (little or no exercise)</option>
+			<option value="2">Lightly Active (light exercise or sports 1-3 days a week)</option>
+			<option value="3">Moderately Active (moderate exercise or sports 3-5 days a week)</option>
+			<option value="4">Very Active (hard exercise or sports 6-7 days a week)</option>
+			<option value="5">Super Active (very hard exercise or sports, physical job or training twice a day)</option>
+		</select><br><br>
+		
+		<label for="dietary-preferences">Dietary Preferences:</label><br>
+		<input type="checkbox" id="vegetarian" name="dietary-preferences" value="vegetarian">
+		<label for="vegetarian">Vegetarian</label><br>
+		
+		<input type="checkbox" id="vegan" name="dietary-preferences" value="vegan">
+		<label for="vegan">Vegan</label><br>
+		
+		<input type="checkbox" id="halal" name="dietary-preferences" value="halal">
+		<label for="halal">Halal</label><br>
+		
+		<input type="checkbox" id="gluten-free" name="dietary-preferences" value="gluten-free">
+		<label for="gluten-free">Gluten-Free</label><br><br>
+		
+		<input type="submit" value="Submit">
+	</form>
+{% endblock %}
