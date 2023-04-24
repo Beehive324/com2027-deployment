@@ -19,7 +19,7 @@ import homeapp, homeapp.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', include('homeapp.urls')), #
+    path('home/', include('homeapp.urls')),
 
     #Account related URLs:
     path('accounts/', include('django.contrib.auth.urls')), #Accounts, used to login (accounts/login)
