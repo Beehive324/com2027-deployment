@@ -1,9 +1,11 @@
 body {
-    background: linear-gradient(to bottom, #1E90FF, #87CEFA);
+  background: linear-gradient(to bottom, #1E90FF, #87CEFA);
 }
+
 .leftmenu{
   float: left;
 }
+
 .rightmenu{
   float: right;
 }
@@ -17,14 +19,14 @@ body {
   padding: 0;
   width: 100%;
   overflow: hidden;
-  background-color: rgb(24, 90, 189);
+  background-color:  rgb(123,146,172);
   
   li {
     float: left;
   }
   a {
       display: block;
-      color: white;
+      color: rgb(0, 0, 0);
       text-align: center;
       padding: 14px 16px;
       text-decoration: none;

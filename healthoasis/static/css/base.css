@@ -16,12 +16,12 @@ body {
   padding: 0;
   width: 100%;
   overflow: hidden;
-  background-color: #185abd; }
+  background-color: #7b92ac; }
   .menu li {
     float: left; }
   .menu a {
     display: block;
-    color: white;
+    color: black;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none; }
