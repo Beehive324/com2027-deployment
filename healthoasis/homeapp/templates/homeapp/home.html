@@ -7,11 +7,24 @@
 <h1>Homepage</h1>
 
 {% block weatherAPI %}
-<p>Current weather conditions for {{ location }}: {{condition}}</p>
+<section>
+<h2>Weather</h2>
+    <p>Current weather conditions for {{ location }}: {{condition}}</p>
 <p>Temperature (C): {{temp}} (Feels: {{feelslike}})</p>
 <p>Wind: {{wind_mph}}mph ({{wind_dir}})</p><p>Visibility: {{vis}} miles</p>
-<p>Example food: {{nName}} contains {{nCals}} calories, {{nFat}} fats</p>
-<p>Example exercise: Excersise "{{eType}}" - Calories burnt {{burntCals}}</p>
+</section>
 {% endblock weatherAPI %}
+
+<section>
+    <h2>Food</h2>
+    <p>Example food: {{nName}} contains {{nCals}} calories, {{nFat}} fats</p>
+    <img src="{{nImg}}" width="50%" >
+</section>
+
+<section>
+    <h2>Exercise</h2>
+    <p>Example exercise: Excersise "{{eType}}" - Calories burnt {{burntCals}}</p>
+</section>
+
 
 {% endblock content %}
