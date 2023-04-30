@@ -23,7 +23,8 @@ urlpatterns = [
     path('', lambda reuqest: redirect('home/', permanent=False)),   #redirect empty URL to home
     path('home/', include('homeapp.urls')), #
     
-    
+    path('chat/', include('chatapp.urls')),
+
 
     #Account related URLs:
     path('accounts/', include('django.contrib.auth.urls')), #Accounts, used to login (accounts/login)
