@@ -7,8 +7,9 @@
 {% block content%}
 
  <h1>{{ room_name }}</h1>
+ <p>This is an un-moderated channel. Please be respectful of other users.</p>
  <textarea id="chat-log" cols="100" rows="20"></textarea><br>
- <input id="chat-message-input" type="text" size="100"><br>
+ <input id="chat-message-input" type="text" size="100" placeholder="Your message here"><br>
  <input id="chat-message-submit" type="button" value="Send">
  <input type="hidden" id="room_name" value="{{room_name}}">
  {% block jsincludes %}
