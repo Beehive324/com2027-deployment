@@ -70,6 +70,6 @@ class ChatConsumer(WebsocketConsumer):
         else:
             pre += "'"
 
-        message = f"{pre}: {event['message']}\n({event['timestamp']})"
+        message = f"{event['timestamp']} | {pre}:\n\t- {event['message']}\n"
         # Send message to WebSocket
         self.send(text_data=json.dumps({"message": message}))
