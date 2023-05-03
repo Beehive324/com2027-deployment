@@ -94,6 +94,24 @@ def home(request):
     }
     return render(request, 'homeapp/home.html', context)
 
+def search(request):
+    if request.method == 'POST':
+        query = request.POST.get('query', '')
+        data = {'query': query}
+        response = requests.post(nutritionEndPt, headers=headers, json=data)
+        if response.status_code == 200:
+            results = response.json()
+            return render(request, 'nutrition/results.html', {'results': results})
+    return render(request, 'nutrition/search.html')
+
+def results(request):
+    return render(request, 'nutrition/results.html')
+
+@login_required
+def nutrition(request):
+    context = {}
+    return render(request, 'nutrition/nutrition.html', context)
+
 #View to register a user
 class RegisterUser(CreateView):
     model = User

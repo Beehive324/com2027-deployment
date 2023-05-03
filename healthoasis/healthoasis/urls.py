@@ -19,18 +19,29 @@ from django.shortcuts import redirect
 import homeapp, homeapp.views
 
 urlpatterns = [
+    #Admin URL
     path('admin/', admin.site.urls),
-    path('', lambda reuqest: redirect('home/', permanent=False)),   #redirect empty URL to home
-    path('home/', include('homeapp.urls')), #
-    
-    path('chat/', include('chatapp.urls')),
 
+    #Homepage URL
+    path('home/', include('homeapp.urls')),
+    #Redirect empty URL to home (127.0.0.1:8000/ -> 127.0.0.1:8000/home)
+    path('', lambda reuqest: redirect('home/', permanent=False)),
+    
+    #Nutrition URL
+    path('nutrition/', homeapp.views.nutrition, name='nutrition'),
+    path('nutrition/search/', homeapp.views.search, name='search'),
+    path('nutrition/search/results', homeapp.views.results, name='results'),
+
+    #Chat websocket URLs
+    path('chat/', include('chatapp.urls')),
 
     #Account related URLs:
     path('accounts/', include('django.contrib.auth.urls')), #Accounts, used to login (accounts/login)
     path('accounts/signup/', homeapp.views.RegisterUser.as_view(), name='signup_user'), #Signup page
     path('accounts/edit/', homeapp.views.updateUser, name="updateUser"),
     path('accounts/delete/', homeapp.views.deleteUser, name="deleteUser"),
+    
+    #Workout URLs
     path('workoutlog/add/', homeapp.views.addWorkout, name='addWorkout'),
     path('workoutlog/edit', homeapp.views.editWorkout, name='editWorkout'),
     path('workoutlog/delete', homeapp.views.deleteWorkout, name='deleteWorkout'),
