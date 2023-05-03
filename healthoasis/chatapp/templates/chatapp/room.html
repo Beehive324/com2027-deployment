@@ -5,11 +5,77 @@
 {% endblock title %}
 
 {% block content%}
+<style> 
+#chat-log {
+  padding: 10px;
+}
 
+input[type="text"],
+input[type="button"],
+input[type="hidden"] {
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+#chat-log {
+  width: 100%;
+  height: 300px;
+  padding: 10px;
+  font-size: 16px;
+  overflow-y: scroll;
+  opacity: 0.9;
+}
+
+#chat-message-input {
+  width: 100%;
+  height: 40px;
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+#chat-message-submit {
+  background-color: #4285f4;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#room_name {
+  display: none;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#chat-message-input {
+  flex: 1;
+  margin-right: 10px;
+  width: 50%;
+}
+
+#chat-message-submit {
+  flex: 0 0 auto;
+}
+
+form input[type="button"] {
+  flex: 0;
+  width: auto;
+}
+</style>
  <h1>{{ room_name }}</h1>
- <p>This is an un-moderated channel. Please be respectful of other users.</p>
- <textarea id="chat-log" cols="100" rows="20"></textarea><br>
- <input id="chat-message-input" type="text" size="100" placeholder="Your message here"><br>
+ <p>This is an un-moderated channel for {{ room_name }}. Please be respectful of other users.</p>
+ <textarea id="chat-log" cols="50" rows="20" readonly="true"></textarea><br><br>
+ <input id="chat-message-input" type="text" size="50" placeholder="Your message here">
  <input id="chat-message-submit" type="button" value="Send">
  <input type="hidden" id="room_name" value="{{room_name}}">
  {% block jsincludes %}

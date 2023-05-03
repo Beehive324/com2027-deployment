@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Search Results</title>
+{% endblock title%}
+
+{% block content %}
+<h1>Search Results</h1>
+
+{% if results %}
+    <ul>
+    {% for food in results.foods %}
+        <li>{{ food.food_name }} - {{ food.nf_calories }} calories</li>
+        <li>{{ food.nf_saturated_fat }} fat</li>
+        <img src="{{ food.photo.highres }}" width='30%' alt="{{ food.food_name }}">
+    {% endfor %}
+    <p>No further results found.</p>
+    </ul>
+{% else %}
+    <p>No further results found.</p>
+{% endif %}
+<br>
+<form method="post" action="{% url 'search' %}">
+    {% csrf_token %}
+    <input type="text" name="query">
+    <button type="submit">Search</button>
+</form>
+{% endblock content %}
+
