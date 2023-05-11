@@ -143,6 +143,27 @@ def deleteUser(request):
         return redirect('/home')
     return render(request, "registration/deleteUser.html", context)
 
+#_____________________________________________________________________
+#View to add a workout(added this just to see the workouts pages -Obi)
+def workout2(request):
+    return render(request, 'workoutlog/workouts.html')
+
+def addWorkout2(request):
+    return render(request, 'workoutlog/add.html')
+
+def editWorkout2(request):
+    return render(request, 'workoutlog/edit.html')
+
+def deleteWorkout2(request):
+    return render(request, 'workoutlog/delete.html')
+
+
+#View to add a progress (Its empty for now just added it to complete the navbar)
+def progress(request):
+    return render(request, 'progress/progress.html')
+#_____________________________________________________________________
+
+
 
 #View to add a workout
 @login_required
