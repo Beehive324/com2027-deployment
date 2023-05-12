@@ -3,7 +3,7 @@
 {% load sass_tags %}
 <!DOCTYPE html>
 <html>
-    <head>
+    <head></head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- Link to stylesheet -->
@@ -27,10 +27,50 @@
     </head>
     <body>
         {% include "navbar.html" %}
-
     {% block content %}
     {% endblock content %}
     </body>
-        
+    <footer>
+        <ul>
+          <li><a href="#">Terms Of Service</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Socials</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+    </footer> 
+    <style>
+        /*healthoasis image*/
+    
+        body {
+            background-image: url("/user/HS402/lk00607/Documents/thumbnail_image001.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        footer {
+          padding: 20px;
+        }
+      
+        footer ul {
+          display: flex;
+          justify-content: space-between;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+        }
+      
+        footer li {
+          margin-right: 20px;
+        }
+      
+        footer li:last-child {
+          margin-right: 0;
+        }
+      
+        footer a {
+          color: #333;
+          text-decoration: none;
+        }
+      </style>
        
 </html>
