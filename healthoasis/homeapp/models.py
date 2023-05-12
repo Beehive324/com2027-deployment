@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 #Model to create a User table to allow us to store required User information in the database.
 class User(models.Model): 
     email =  models.EmailField(unique=True)
-    username = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True) #username = models.CharField(max_length=50, unique=True)
+    username = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=50)
     age = models.IntegerField()
     weight = models.FloatField()

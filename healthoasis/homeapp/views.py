@@ -94,6 +94,24 @@ def home(request):
     }
     return render(request, 'homeapp/home.html', context)
 
+def search(request):
+    if request.method == 'POST':
+        query = request.POST.get('query', '')
+        data = {'query': query}
+        response = requests.post(nutritionEndPt, headers=headers, json=data)
+        if response.status_code == 200:
+            results = response.json()
+            return render(request, 'nutrition/results.html', {'results': results})
+    return render(request, 'nutrition/search.html')
+
+def results(request):
+    return render(request, 'nutrition/results.html')
+
+@login_required
+def nutrition(request):
+    context = {}
+    return render(request, 'nutrition/nutrition.html', context)
+
 #View to register a user
 class RegisterUser(CreateView):
     model = User
@@ -124,6 +142,27 @@ def deleteUser(request):
         user.delete()
         return redirect('/home')
     return render(request, "registration/deleteUser.html", context)
+
+#_____________________________________________________________________
+#View to add a workout(added this just to see the workouts pages -Obi)
+def workout2(request):
+    return render(request, 'workoutlog/workouts.html')
+
+def addWorkout2(request):
+    return render(request, 'workoutlog/add.html')
+
+def editWorkout2(request):
+    return render(request, 'workoutlog/edit.html')
+
+def deleteWorkout2(request):
+    return render(request, 'workoutlog/delete.html')
+
+
+#View to add a progress (Its empty for now just added it to complete the navbar)
+def progress(request):
+    return render(request, 'progress/progress.html')
+#_____________________________________________________________________
+
 
 
 #View to add a workout
