@@ -36,9 +36,6 @@ LOGOUT_REDIRECT_URL = "/home"
 # Application definition
 
 INSTALLED_APPS = [
-    'daphne',
-    'chatapp.apps.ChatappConfig',
-    'channels',
     'homeapp.apps.HomeappConfig',
     'sass_processor',
     'django.contrib.admin',
@@ -48,12 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels.layers.InMemoryChannelLayer',
-    },
-}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -71,7 +62,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS' : [BASE_DIR / 'templates'],
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        # 'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,7 +76,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'healthoasis.wsgi.application'
-ASGI_APPLICATION = 'healthoasis.asgi.application'
 
 
 # Database
