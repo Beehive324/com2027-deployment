@@ -10,3 +10,17 @@ class UserCreationWithEmailForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("username", "email")
+
+
+class BreakfastForm(forms.Form):
+    BREAKFAST_CHOICES = [
+        ('healthy', 'Option 1 (Healthy)'),
+        ('medium', 'Option 2 (Medium Healthy)'),
+        ('unhealthy', 'Option 3 (Unhealthy)'),
+    ]
+
+    breakfast_choice = forms.ChoiceField(
+        label='Pick 1 of the 3 options for breakfast choices.',
+        choices=BREAKFAST_CHOICES,
+        widget=forms.RadioSelect
+    )
