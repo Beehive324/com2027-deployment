@@ -48,5 +48,5 @@ urlpatterns = [
     path('workoutlog/delete', homeapp.views.deleteWorkout2, name='deleteWorkout'),
     
     #Workout URLs
-    path('progress/progress', homeapp.views.progress, name='progress'),
+    path('progress/', homeapp.views.progress, name='progress'),
 ]

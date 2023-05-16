@@ -156,13 +156,14 @@ def editWorkout2(request):
 
 def deleteWorkout2(request):
     return render(request, 'workoutlog/delete.html')
-
-
-#View to add a progress (Its empty for now just added it to complete the navbar)
-def progress(request):
-    return render(request, 'progress/progress.html')
 #_____________________________________________________________________
 
+@login_required
+#View to see progress
+def progress(request):
+    context = {}
+    context["workoutlist"] = UserWorkouts.objects.filter(user = request.user.id)
+    return render(request, 'progress/progress.html')
 
 
 #View to add a workout
