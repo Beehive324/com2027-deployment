@@ -3,9 +3,13 @@
  <title>Chat Rooms</title>
 {% endblock title %}
 {% block content %}
+<section>
  <h1>Chat Rooms</h1>
+ <p>HealthOasis supports dynamically created real-time chatrooms. Please note, these chat rooms are not moderated.</p>
+ <p>Choose from the pre-defined rooms below, or </p>
  <ul>
  <li><a href="{% url 'room' 'General' %}">General Discussion</a></li>
  <li><a href="{% url 'room' 'Support' %}">Support</a></li>
  </ul>
+</section>
 {% endblock content %}
