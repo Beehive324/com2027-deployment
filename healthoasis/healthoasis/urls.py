@@ -42,11 +42,11 @@ urlpatterns = [
     path('accounts/delete/', homeapp.views.deleteUser, name="deleteUser"),
     
     #Workout URLs
-    path('workoutlog/workouts', homeapp.views.workout2, name='workouts'),
+    path('workoutlog/', homeapp.views.workout2, name='workouts'),
     path('workoutlog/add', homeapp.views.addWorkout2, name='addWorkout'),
     path('workoutlog/edit', homeapp.views.editWorkout2, name='editWorkout'),
     path('workoutlog/delete', homeapp.views.deleteWorkout2, name='deleteWorkout'),
     
     #Workout URLs
-    path('progress/progress', homeapp.views.progress, name='progress'),
+    path('progress/', homeapp.views.progress, name='progress'),
 ]

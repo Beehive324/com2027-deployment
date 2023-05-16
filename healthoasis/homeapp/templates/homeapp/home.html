@@ -5,6 +5,28 @@
 
 {% block content %}
 <h1>Homepage</h1>
+{% if user.is_authenticated %}
+<section>  
+    <h2>Weather</h2>
+    <p>Current weather conditions for {{ location }}: {{condition}}</p>
+    <p>Temperature (C): {{temp}} (Feels: {{feelslike}})</p>
+    <p>Wind: {{wind_mph}}mph ({{wind_dir}})</p><p>Visibility: {{vis}} miles</p>
+        
+    <br><br><br>
+
+    <h2>Nutrition</h2>
+    <p>You can search for nutritional values of different foods <a href="{% url 'nutrition' %}">here</a></p>
+    <p>Example food: {{nName}} contains {{nCals}} calories, {{nFat}} fats</p>
+    <img src="{{nImg}}" width="50%" >
+    
+    <br><br><br>
+
+    <h2>Exercise</h2>
+    <p>You can manage workouts <a href="{% url 'workouts' %}">here</a>, and view your general progess <a href="{% url 'progress' %}">here</a>.</p>
+    <p>In the future, we may be able to calculate some insights into your wokout. For example exercise: Excersise "{{eType}}" - Calories burnt {{burntCals}}</p>
+    <p>This data was generated with the NutritionIX API excersise endpoint.</p>
+    </section>
+{% else %}
 <section>
     <form>
         <input type="email" id="email" name="email" placeholder="EMAIL" required>
@@ -110,24 +132,9 @@
         <button onclick="location.href='/accounts/signup'" id="button1">SIGN UP</button>
     </div>     
 </section>
+{%endif%}
 
 <!-- 
-<section>  
-<h2>Weather</h2>
-    <p>Current weather conditions for {{ location }}: {{condition}}</p>
-<p>Temperature (C): {{temp}} (Feels: {{feelslike}})</p>
-<p>Wind: {{wind_mph}}mph ({{wind_dir}})</p><p>Visibility: {{vis}} miles</p>
-</section>
 
-<section>
-    <h2>Food</h2>
-    <p>Example food: {{nName}} contains {{nCals}} calories, {{nFat}} fats</p>
-    <img src="{{nImg}}" width="50%" >
-</section>
-
-<section>
-    <h2>Exercise</h2>
-    <p>Example exercise: Excersise "{{eType}}" - Calories burnt {{burntCals}}</p>
-</section>
 -->
 {% endblock content %}

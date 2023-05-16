@@ -5,7 +5,15 @@
 
 {% block content %}
 <h1>Progress</h1>
-
-<p>Hello, in this section you will see your progress over the weeks. Its currently empty cause you're not active g. Drop the dominos go lift something</p>
-    
+<p>Hello, in this section you will see your progress over the weeks.</p>
+<br><h4>Workouts:</h4>
+<ul>
+{% if workoutlist %}
+    {% for workout in workoutlist %}
+    <li>ID {{workout.id}}: {{workout.date}} - </li>
+    {%  endfor  %}
+{% else %}
+    <li>No workouts stored, manage them <a href="{% url 'workouts' %}">here</a></li>
+{% endif %}
+</ul>
 {% endblock content %}
