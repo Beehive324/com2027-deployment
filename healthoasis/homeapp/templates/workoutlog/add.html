@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Add Workout</title>
+{% endblock title%}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add Workout</title>
+</head>
+<body>
+<h1>Add Workout</h1>
+<form method="post">
+{% csrf_token %}
+<label for="user_id">User:</label>
+<select id="user_id" name="user_id">
+{% for user in users %}
+<option value="{{ user.id }}">{{ user.username }}</option>
+{% endfor %}
+</select><br>
+<label for="exercise_id">Exercise:</label>
+<select id="exercise_id" name="exercise_id">
+{% for exercise in exercises %}
+<option value="{{ exercise.id }}">{{ exercise.name }}</option>
+{% endfor %}
+</select><br>
+<label for="date">Date:</label>
+<input type="date" id="date" name="date"><br>
+<label for="duration">Duration (minutes):</label>
+<input type="number" id="duration" name="duration"><br>
+<input type="submit" value="Submit">
+</form>
+</body>
+</html>
+{% endblock content %}

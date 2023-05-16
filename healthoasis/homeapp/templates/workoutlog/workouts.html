@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Workouts</title>
+{% endblock title%}
+
+{% block content %}
+<h1>Workouts</h1>
+
+<p>Hello, Welcome to your workouts section. You can add, view and delete your workouts here</p>
+    <ul>
+    <li> <a href="{% url 'addWorkout' %}">Add Workout</a> </li>
+    <li> <a href="{% url 'editWorkout' %}">Edit Workout</a> </li>
+    <li> <a href="{% url 'deleteWorkout' %}">Delete Workout</a> </li>
+</ul>
+{% endblock content %}

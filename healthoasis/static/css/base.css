@@ -1,0 +1,31 @@
+body {
+  background: linear-gradient(to bottom, #1E90FF, #87CEFA); }
+
+.leftmenu {
+  float: left; }
+
+.rightmenu {
+  float: right; }
+
+.menu {
+  font-weight: bold;
+  float: left;
+  color: white;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+  background-color: #7b92ac; }
+  .menu li {
+    float: left; }
+  .menu a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none; }
+  .menu a:hover {
+    background-color: #444; }
+
+/*# sourceMappingURL=base.css.map */

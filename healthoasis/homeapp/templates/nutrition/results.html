@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Search Results</title>
+{% endblock title%}
+
+{% block content %}
+<section>
+<h1>Nutrition Search</h1>
+<p>Enter a natural language query into the box, to search for nutritional values.</p>
+
+<form method="post" action="{% url 'search' %}" style="padding: 0;">
+  {% csrf_token %}
+  <br><input type="text" name="query">
+  <button type="submit">Search</button>
+</form><br>
+<h1>Search Results</h1>
+
+{% if results %}
+    <ul>
+    {% for food in results.foods %}
+    <div style="display: flex; flex-wrap: wrap;">
+      <div style="flex: 1;">
+        <table>
+          <thead>
+            <tr>
+              <th colspan="2">Nutrition Facts</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="2">{{ food.food_name }}</td>
+            </tr>
+            <tr>
+              <td>Serving Size</td>
+              <td>{{ food.serving_weight_grams }}g</td>
+            </tr>
+            <tr>
+              <td colspan="2"><hr></td>
+            </tr>
+            <tr>
+              <td><b>Amount Per Serving</b></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Calories</td>
+              <td>{{ food.nf_calories }}</td>
+            </tr>
+            <tr>
+              <td>Total Fat</td>
+              <td>{{ food.nf_total_fat }}g</td>
+            </tr>
+            <tr>
+              <td>&nbsp;&nbsp;Saturated Fat</td>
+              <td>{{ food.nf_saturated_fat }}g</td>
+            </tr>
+            <tr>
+              <td>Protein</td>
+              <td>{{ food.nf_protein }}g</td>
+            </tr>
+            <tr>
+              <td>Total Carbohydrate</td>
+              <td>{{ food.nf_total_carbohydrate }}g</td>
+            </tr>
+            <tr>
+              <td>&nbsp;&nbsp;Sugars</td>
+              <td>{{ food.nf_sugars }}g</td>
+            </tr>
+            <tr>
+              <td colspan="2"><hr></td>
+            </tr>
+            <tr>
+              <td><b>% Daily Value*</b></td>
+              <td>Coming soon</td>
+            
+            <tr>
+              <td colspan="2"><hr></td>
+            </tr>
+            <tr>
+              <td colspan="2"><small>* Percent Daily Values are based on a 2,000 calorie diet.</small></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="flex: 1;">
+        <img src="{{ food.photo.thumb }}" alt="{{ food.food_name }}">
+      </div>
+    </div>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No further results found.</p>
+{% endif %}
+<br>
+<p><small>Note: All data is provided by the NutritionIX database. We cannot accept any responsibility for data inaccuracies, nor guarantee every food type/brand exists in the database.</small></p>
+</section>
+{% endblock content %}
+

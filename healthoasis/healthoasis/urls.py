@@ -15,15 +15,38 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import redirect
 import homeapp, homeapp.views
 
 urlpatterns = [
+    #Admin URL
     path('admin/', admin.site.urls),
-    path('home/', include('homeapp.urls')), #
+
+    #Homepage URL
+    path('home/', include('homeapp.urls')),
+    #Redirect empty URL to home (127.0.0.1:8000/ -> 127.0.0.1:8000/home)
+    path('', lambda reuqest: redirect('home/', permanent=False)),
+    
+    #Nutrition URL
+    path('nutrition/', homeapp.views.nutrition, name='nutrition'),
+    path('nutrition/search/', homeapp.views.search, name='search'),
+    path('nutrition/search/results', homeapp.views.results, name='results'),
+
+    #Chat websocket URLs
+    path('chat/', include('chatapp.urls')),
 
     #Account related URLs:
     path('accounts/', include('django.contrib.auth.urls')), #Accounts, used to login (accounts/login)
-    path('signup/', homeapp.views.RegisterUser.as_view(), name='signup_user'), #Signup page
+    path('accounts/signup/', homeapp.views.RegisterUser.as_view(), name='signup_user'), #Signup page
     path('accounts/edit/', homeapp.views.updateUser, name="updateUser"),
     path('accounts/delete/', homeapp.views.deleteUser, name="deleteUser"),
+    
+    #Workout URLs
+    path('workoutlog/', homeapp.views.workout2, name='workouts'),
+    path('workoutlog/add', homeapp.views.addWorkout2, name='addWorkout'),
+    path('workoutlog/edit', homeapp.views.editWorkout2, name='editWorkout'),
+    path('workoutlog/delete', homeapp.views.deleteWorkout2, name='deleteWorkout'),
+    
+    #Workout URLs
+    path('progress/', homeapp.views.progress, name='progress'),
 ]

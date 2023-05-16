@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Nutrition</title>
+{% endblock title%}
+
+{% block content %}
+<section>
+<h1>Nutrition</h1>
+<p>Here, you can search for the nutritional data of different food types.</p>
+<p>Click below to get started.</p>
+    <ul>
+    <li> <a href="{% url 'search' %}">Search Nutritional Values</a> </li>
+</ul>
+</section>
+{% endblock content %}

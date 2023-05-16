@@ -5,6 +5,134 @@
 
 {% block content %}
 <h1>Homepage</h1>
-<p>Current weather conditions for {{ location }}: {{condition}}</p>
-<p>Temperature (C): {{temp}} - feels like {{feelslike}}</p>
+{% if user.is_authenticated %}
+<section>  
+    <h2>Weather</h2>
+    <p>Current weather conditions for {{ location }}: {{condition}}</p>
+    <p>Temperature (C): {{temp}} (Feels: {{feelslike}})</p>
+    <p>Wind: {{wind_mph}}mph ({{wind_dir}})</p><p>Visibility: {{vis}} miles</p>
+        
+    <br><br><br>
+
+    <h2>Nutrition</h2>
+    <p>You can search for nutritional values of different foods <a href="{% url 'nutrition' %}">here</a></p>
+    
+    <br><br><br>
+
+    <h2>Exercise</h2>
+    <p>You can manage workouts <a href="{% url 'workouts' %}">here</a>, and view your general progess <a href="{% url 'progress' %}">here</a>.</p>
+    <p>In the future, we may be able to calculate some insights into your wokout. For example exercise: Excersise "{{eType}}" - Calories burnt {{burntCals}}</p>
+    <p>This data was generated with the NutritionIX API excersise endpoint.</p>
+    </section>
+{% else %}
+<section>
+    <form>
+        <input type="email" id="email" name="email" placeholder="EMAIL" required>
+        <br>
+        <input type="password" id="password" name="password" placeholder="PASSWORD" required>
+    </form>
+    <br>
+    <style>
+        #button1{
+        width: 150px;
+        height: 40px;
+        color:aliceblue;
+        background-color: #090d4e;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        transition-duration: 0.4s;
+        position:absolute; 
+        left:375px; top:250px;
+        
+        }
+        #button2{
+        width: 150px;
+        height: 40px;
+        color:aliceblue;
+        background-color: #090d4e;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;   
+        transition-duration: 0.4s;
+        position:absolute; 
+        left:225px; top:250px;
+        } 
+        #button1:hover {
+        background-color: #898f89; 
+        color: white;
+        }
+        #button2:hover {
+        background-color: #898f89; 
+        color: white;
+        }
+        #btn-group #button {
+            background-color: #f81111; 
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            float: left;
+            border: 1px solid green;
+        }
+        #btn-group #button:hover {
+        background-color: #28c928; 
+        color: white;
+        } 
+        input[type=email] {
+            width: 21%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 3px solid #ccc;
+            border-top-right-radius: 25px;
+            border-top-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+            border-bottom-left-radius: 25px;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+            outline: none;
+            border-color: #161515;
+            color:#141614;
+            position:absolute; 
+            left:580px; top:250px;
+        }
+/*hello*/
+        input[type=email]:focus {
+            border: 2px solid rgb(117, 109, 109);
+        }
+        input[type=password] {
+            width: 21%;
+            padding: 12px 20px;
+            margin-inline-start: 8px 8;
+            box-sizing: border-box;
+            border: 3px solid #ccc;
+            border-top-right-radius: 25px;
+            border-top-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+            border-bottom-left-radius: 25px;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+            outline: none;
+            border-color: #161515;
+            color:#141614;
+            position:absolute; 
+            left:580px; top:335px;
+        }
+
+        input[type=password]:focus {
+            border: 2px solid rgb(117, 109, 109);
+        } 
+    </style>
+    <div class="btn-group">
+        <button type="submit" id="button2" >LOG IN</button>
+        <button onclick="location.href='/accounts/signup'" id="button1">SIGN UP</button>
+    </div>     
+</section>
+{%endif%}
+
+<!-- 
+
+-->
 {% endblock content %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Delete Workout</title>
+{% endblock title%}
+
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Delete Workout</title>
+</head>
+<body>
+<h1>Delete Workout</h1>
+<form method="post">
+{% csrf_token %}
+<p>Are you sure you want to delete the following workout?</p>
+<p><strong>Name:</strong> {{ workout.name }}</p>
+<p><strong>Description:</strong> {{ workout.description }}</p>
+<p><strong>User:</strong> {{ workout.user.username }}</p>
+<p><strong>Date:</strong> {{ workout.date }}</p>
+<p><strong>Duration:</strong> {{ workout.duration }} minutes</p>
+<input type="submit" value="Delete Workout">
+</form>
+</body>
+</html>
+{% endblock content %}

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 #Model to create a User table to allow us to store required User information in the database.
 class User(models.Model): 
