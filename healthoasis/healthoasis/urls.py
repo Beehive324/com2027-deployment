@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
 import homeapp, homeapp.views
+from homeapp.views import questionnaire_page1
 
 urlpatterns = [
     #Admin URL
