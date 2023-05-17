@@ -80,7 +80,7 @@ class UserWorkouts(models.Model):
 #Model to create a UserNutrition table to store information of the caloric intake of the User.
 class UserNutrition(models.Model):
     calories = models.FloatField(validators=[MinValueValidator(0.0)])
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False)
     last_updated = models.DateTimeField(auto_now = True)
 
     def time_since_creation(self):
