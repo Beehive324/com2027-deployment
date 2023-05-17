@@ -36,6 +36,11 @@ headers = {'x-app-id':nutritionAppID,
 nutritionEndPt = 'https://trackapi.nutritionix.com/v2/natural/nutrients'
 exerciseEndPt = 'https://trackapi.nutritionix.com/v2/natural/exercise'
 
+#APINinja exercise API variables
+APINinjaKey = 'f7INLmwM1qteGEeuhO1HwQ==ZjyRFWgA4YkQouxM'
+APINinjaHeaders = {'X-Api-Key' : APINinjaKey}
+APINinjaEndPt = 'https://api.api-ninjas.com/v1/exercises?muscle='
+
 #View for homepage
 def home(request):
     #WeatherAPI data getter
@@ -107,6 +112,24 @@ def search(request):
 
 def results(request):
     return render(request, 'nutrition/results.html')
+
+def exerciseSearch(request):
+    if request.method == 'POST':
+        muscle = request.POST.get('query', '')
+        print(muscle)
+        url = 'https://api.api-ninjas.com/v1/exercises?muscle={}'.format(muscle)
+        print(url)
+        response = requests.get(url, headers=APINinjaHeaders)
+        print(response)
+        print(response.status_code)
+        if response.status_code == 200:
+            results = response.json()
+            print(results)
+            return render(request, 'exerciseFinder/results.html', {'results': results})
+    return render(request, 'exerciseFinder/search.html')
+
+def exerciseResults(request):
+    return render(request, 'exerciseFinder/results.html')
 
 @login_required
 def nutrition(request):

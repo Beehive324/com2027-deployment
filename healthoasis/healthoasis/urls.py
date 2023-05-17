@@ -47,7 +47,11 @@ urlpatterns = [
     path('workoutlog/edit', homeapp.views.editWorkout2, name='editWorkout'),
     path('workoutlog/delete', homeapp.views.deleteWorkout2, name='deleteWorkout'),
     
-    #Workout URLs
+    #Exercise URLs
+    path('workoutlog/search/', homeapp.views.exerciseSearch, name='exerciseSearch'),
+    path('workoutlog/search/results', homeapp.views.exerciseResults, name='exerciseResults'),
+
+    #Progress URLs
     path('progress/', homeapp.views.progress, name='progress'),
 
     #about URL
