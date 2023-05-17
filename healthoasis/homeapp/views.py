@@ -47,7 +47,7 @@ def home(request):
     except: #Not in pre-def dictionary? Keep as-is
         windDir = weather['current']['wind_dir']
 
-    #NutritionAPI data getter
+    '''#NutritionAPI data getter
     nQuery = {
         "query":"big mac"
     }
@@ -91,7 +91,8 @@ def home(request):
 
                'burntCals':burntCals,
                'eType':type
-    }
+    }'''
+    context = {}
     return render(request, 'homeapp/home.html', context)
 
 def search(request):
