@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+from django.contrib import messages
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -47,7 +47,7 @@ def home(request):
     except: #Not in pre-def dictionary? Keep as-is
         windDir = weather['current']['wind_dir']
 
-    #NutritionAPI data getter
+    '''#NutritionAPI data getter
     nQuery = {
         "query":"big mac"
     }
@@ -91,7 +91,8 @@ def home(request):
 
                'burntCals':burntCals,
                'eType':type
-    }
+    }'''
+    context = {}
     return render(request, 'homeapp/home.html', context)
 
 def search(request):
@@ -207,3 +208,28 @@ def deleteWorkout(request, workout_id):
         return redirect('success_page')
     else:
         return render(request, 'workoutlog/delete.html', {'workout': workout})
+
+@login_required
+def logUserNutrition(request):
+    context ={}
+    currentUser = get_object_or_404(User, id = request.user.id)
+    form = UserNutritionFormCreate(request.POST or None)
+    if(request.method == 'POST'):
+        if form.is_valid():
+            if(UserNutrition.objects.filter(user = currentUser).exists):
+                messages.add_message(request, messages.ERROR, 'You already have your Nutrition saved, update to change it.')
+            else:
+                form = UserNutrition(calories = form.cleaned_data['calories'], user = request.user)
+                form.save()
+                messages.add_message(request, messages.SUCCESS, 'Nutrition updated.')
+                return redirect('/home')
+        else:
+            messages.add_message(request, messages.ERROR, 'Invalid Form Data; Nutrition not updated.')
+    context['form']= form
+    return render(request, "user/logUserNutrition.html", context)
+
+@login_required
+def viewUserNutrition(request):
+    context ={}
+    context["nutrition_list"] = UserNutrition.objects.all()
+    return render(request, "notesapp/index.html", context)

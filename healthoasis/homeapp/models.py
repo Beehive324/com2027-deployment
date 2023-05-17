@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 #Model to create a User table to allow us to store required User information in the database.
-class User(models.Model): 
+class UserDetails(models.Model): 
     email =  models.EmailField(unique=True)
     username = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=50)
@@ -73,5 +73,11 @@ class UserWorkouts(models.Model):
 
 #Model to create a UserNutrition table to store information of the caloric intake of the User.
 class UserNutrition(models.Model):
-    name = models.CharField(max_length=50)
     calories = models.FloatField()
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.calories) +  " " + str(self.user)
+    
+    def getUserId(self):
+        return self.user.pk

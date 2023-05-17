@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Created</th>
+        <th>Updated</th>
+</tr>
+{% for note in note_list %}
+<tr>
+<td>
+<a href="{% url 'notes_detail' note.id %}">
+{{ note.title | truncatechars:20}}</a>
+</td>
+<td>
+{{ note.description | truncatechars:25}}
+</td>
+<td>
+{{note.created_at}}
+</td>
+<td>
+{{note.updated_at}}
+</td>
+</tr>
+{% endfor %}
+</table> <hr/>
+<input type="button" onclick="location.href='{%
+url 'notes_new' %}';" value="New" />
+{% endblock content %}
+}

@@ -49,4 +49,9 @@ urlpatterns = [
     
     #Workout URLs
     path('progress/progress', homeapp.views.progress, name='progress'),
+
+    #Nutrition URLs pertaining to users.
+    path('nutrition/log', homeapp.views.logUserNutrition, name = 'nutritionCreate'),
+    path('nutrition/view', homeapp.views.viewUserNutrition, name = 'nutritionView'),
+    
 ]

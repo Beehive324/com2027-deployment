@@ -10,3 +10,19 @@ class UserCreationWithEmailForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("username", "email")
+
+
+class UserNutritionFormCreate(forms.ModelForm):
+    class Meta:
+        model = UserNutrition
+
+        fields = ['calories', 'user']
+
+        widgets = {
+            'calories' : forms.NumberInput(attrs = {
+                'placeholder' : 'Calories',
+                'required' : True,
+                'class' : 'formfield'
+            }),
+            'user': forms.HiddenInput(),
+        }
