@@ -267,15 +267,14 @@ def logUserNutrition(request):
                 existingCalorieEntry = UserNutrition.objects.get(user = currentUser)
                 if(existingCalorieEntry.time_since_creation() < 7):
                     messages.add_message(request, messages.ERROR, 'Cannot update Current Caloric intake; Has not yet been a week.')
-                    return redirect('/nutrition')
                 else:
                     existingCalorieEntry.calories = form.cleaned_data['calories']
                     existingCalorieEntry.save() 
                     messages.add_message(request, messages.SUCCESS, 'Weekly Caloric intake updated.')
             except UserNutrition.DoesNotExist:
-                form = UserNutrition(calories = form.cleaned_data['calories'], user = request.user)
+                newEntry = UserNutrition(calories = form.cleaned_data['calories'], user = request.user)
                 messages.add_message(request, messages.SUCCESS, 'Weekly Caloric intake Logged.')
-                form.save()
+                newEntry.save()
             return redirect('/nutrition')
         else:
             messages.add_message(request, messages.ERROR, 'Invalid Form Data; Nutrition not updated.')
