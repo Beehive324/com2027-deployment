@@ -54,6 +54,5 @@ urlpatterns = [
     path('home/about', homeapp.views.about , name='about'),
 
     #Nutrition URLs pertaining to users.
-    path('nutrition/log', homeapp.views.logUserNutrition, name = 'nutritionCreate'),
-    path('nutrition/view', homeapp.views.viewUserNutrition, name = 'nutritionView'),
+    path('nutrition/log', homeapp.views.logUserNutrition, name = 'nutritionLog'),
 ]

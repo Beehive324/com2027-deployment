@@ -1,5 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
+from datetime import datetime
+from django.utils import timezone
+
+
+
 
 #Model to create a User table to allow us to store required User information in the database.
 class UserDetails(models.Model): 
@@ -73,11 +79,14 @@ class UserWorkouts(models.Model):
 
 #Model to create a UserNutrition table to store information of the caloric intake of the User.
 class UserNutrition(models.Model):
-    calories = models.FloatField()
+    calories = models.FloatField(validators=[MinValueValidator(0.0)])
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    last_updated = models.DateTimeField(auto_now = True)
 
-    def __str__(self):
-        return str(self.calories) +  " " + str(self.user)
+    def time_since_creation(self):
+        now = timezone.now()
+        timedelta = now - self.last_updated
+        return timedelta.days
     
-    def getUserId(self):
-        return self.user.pk
+    def __str__(self):
+        return str(self.calories) +  " " + str(self.user) + " " + str(self.last_updated)
