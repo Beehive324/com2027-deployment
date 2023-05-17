@@ -220,3 +220,7 @@ def deleteWorkout(request, workout_id):
         return redirect('success_page')
     else:
         return render(request, 'workoutlog/delete.html', {'workout': workout})
+
+def about(request):
+    html = "<html><body>This is the about page</body><html>"
+    return HttpResponse(html)

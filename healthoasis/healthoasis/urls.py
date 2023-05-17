@@ -49,4 +49,7 @@ urlpatterns = [
     
     #Workout URLs
     path('progress/', homeapp.views.progress, name='progress'),
+
+    #about URL
+    path('about', homeapp.views.about , name='about'),
 ]
