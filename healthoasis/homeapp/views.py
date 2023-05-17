@@ -144,6 +144,17 @@ def deleteUser(request):
         return redirect('/home')
     return render(request, "registration/deleteUser.html", context)
 
+def breakfast(request):
+    if request.method == 'POST':
+        form = BreakfastForm(request.POST)
+        if form.is_valid():
+            breakfast_choice = form.cleaned_data['breakfast_choice']
+            # Process the selected breakfast choice here
+            return redirect('lunch_choices')  # Replace 'lunch_choices' with your actual URL name for the lunch choices page
+    else:
+        form = BreakfastForm()
+    
+    return render(request, 'breakfast.html', {'form': form})
 #_____________________________________________________________________
 #View to add a workout(added this just to see the workouts pages -Obi)
 def workout2(request):
