@@ -205,21 +205,16 @@ def addWorkout(request):
     if request.method == 'POST':
         form = UserWorkout(request.POST)
         if form.is_valid():
-            # Create a new Workout object with form data
             workout = form.save(commit=False)
             workout.date = date.today()
-            # You can also associate the workout with the current user
-            # workout.user = request.user
             workout.save()
-
-            # Redirect to a success page or any other desired action
-            return redirect('home')
+            return redirect('home')  
     else:
         form = UserWorkout()
 
     context = {'form': form}
     return render(request, 'workoutlog/add.html', context)
-
+    
 #View to edit a workout
 @login_required
 def editWorkout(request, workout_id):

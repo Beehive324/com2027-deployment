@@ -1,38 +1,12 @@
+<!-- workoutlog/add.html -->
 {% extends "base.html" %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add Workout</title>
-</head>
-<body>
-    <h1>Add Workout</h1>
-
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-
-        <button type="submit">Add Workout</button>
-    </form>
-
-    {% if success_message %}
-    <p>{{ success_message }}</p>
-    {% endif %}
-
-    {% if form.errors %}
-    <ul>
-        {% for field in form %}
-        {% if field.errors %}
-        <li>{{ field.label }}:
-            <ul>
-                {% for error in field.errors %}
-                <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        </li>
-        {% endif %}
-        {% endfor %}
-    </ul>
-    {% endif %}
-
-</body>
-</html>
+{% block title %}
+<title>Add Workout</title>
+{% endblock %}
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Save</button>
+</form>
+{% endblock %}
