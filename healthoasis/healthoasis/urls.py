@@ -59,4 +59,7 @@ urlpatterns = [
 
     #Nutrition URLs pertaining to users.
     path('nutrition/log', homeapp.views.logUserNutrition, name = 'nutritionLog'),
+
+    #Questionnaire URLs
+    path('questionnaire/page1/', questionnaire_page1, name='questionnaire_page1'),
 ]
