@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Search</title>
+{% endblock title%}
+
+{% block content %}
+<section>
+
+<h1>Exercise Search</h1>
+<p>Choose a muscle group below, and search to find different exercises viable.</p>
+<form method="post" action="{% url 'exerciseSearch' %}">
+    {% csrf_token %}
+    <label for="query">Muscle Group:</label>
+    <select id="query" name="query">
+    <option value="abdominals">Abdominals</option>
+    <option value="abductors">Abductors</option>
+    <option value="adductors">Adductors</option>
+    <option value="biceps">Biceps</option>
+    <option value="calves">Calves</option>
+    <option value="chest">Chest</option>
+    <option value="forearms">Forearms</option>
+    <option value="glutes">Glutes</option>
+    <option value="hamstrings">Hamstrings</option>
+    <option value="lats">Lats</option>
+    <option value="lower_back">Lower Back</option>
+    <option value="middle_back">Middle Back</option>
+    <option value="neck">Neck</option>
+    <option value="quadriceps">Quadriceps</option>
+    <option value="traps">Traps</option>
+    <option value="triceps">Triceps</option>
+    </select>
+    <select id="difficulty" name="difficulty">
+        <option valie="">All</option>
+        <option value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="expert">Expert</option>
+    </select>
+    <button type="submit">Search</button>
+</form>
+<p><small>Note: All data is provided by the APINinja database. We cannot accept any responsibility for inaccuracies, nor guarantee every exercise/muscle group exists in the database.</small></p>
+    
+</section>
+{% endblock content %}
