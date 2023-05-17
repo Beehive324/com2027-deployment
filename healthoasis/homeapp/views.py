@@ -230,6 +230,7 @@ def about(request):
     context = {}
     return render(request, 'homeapp/about.html', context)
 
+#View with logic to Log User's weekly caloric intake.
 @login_required
 def logUserNutrition(request):
     context ={}
