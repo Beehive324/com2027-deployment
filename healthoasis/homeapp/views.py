@@ -53,19 +53,6 @@ def home(request):
     except: #Not in pre-def dictionary? Keep as-is
         windDir = weather['current']['wind_dir']
 
-    '''#NutritionAPI data getter
-    nQuery = {
-        "query":"big mac"
-    }
-    nutritionResponse = requests.post(nutritionEndPt, headers=headers, json=nQuery)
-    nutrition = nutritionResponse.json()
-    #Extract info from request
-    for food in nutrition['foods']:
-        name = food['food_name']
-        cals = round(food['nf_calories'])
-        fat = food['nf_saturated_fat']
-        photo = food['photo']['highres']
-
     eQuery = {
         'query':'ran 5 miles',
         'gender':'male',
@@ -90,15 +77,9 @@ def home(request):
                 'wind_dir':windDir,
                'vis':weather['current']['vis_miles'],
 
-               'nName':name,
-               'nCals':cals,
-               'nFat':fat,
-               'nImg':photo,
-
                'burntCals':burntCals,
                'eType':type
-    }'''
-    context = {}
+    }
     return render(request, 'homeapp/home.html', context)
 
 def search(request):
@@ -267,15 +248,14 @@ def logUserNutrition(request):
                 existingCalorieEntry = UserNutrition.objects.get(user = currentUser)
                 if(existingCalorieEntry.time_since_creation() < 7):
                     messages.add_message(request, messages.ERROR, 'Cannot update Current Caloric intake; Has not yet been a week.')
-                    return redirect('/nutrition')
                 else:
                     existingCalorieEntry.calories = form.cleaned_data['calories']
                     existingCalorieEntry.save() 
                     messages.add_message(request, messages.SUCCESS, 'Weekly Caloric intake updated.')
             except UserNutrition.DoesNotExist:
-                form = UserNutrition(calories = form.cleaned_data['calories'], user = request.user)
+                newEntry = UserNutrition(calories = form.cleaned_data['calories'], user = request.user)
                 messages.add_message(request, messages.SUCCESS, 'Weekly Caloric intake Logged.')
-                form.save()
+                newEntry.save()
             return redirect('/nutrition')
         else:
             messages.add_message(request, messages.ERROR, 'Invalid Form Data; Nutrition not updated.')
