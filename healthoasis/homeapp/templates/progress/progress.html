@@ -6,7 +6,7 @@
 {% block content %}
 <h1>Progress</h1>
 <p>Hello, in this section you will see your progress over the weeks.</p>
-<br><h4>Workouts:</h4>
+<br><h4>Workout Records:</h4>
 <ul>
 {% if workoutlist %}
     {% for workout in workoutlist %}
@@ -14,6 +14,17 @@
     {%  endfor  %}
 {% else %}
     <li>No workouts stored, manage them <a href="{% url 'workouts' %}">here</a></li>
+{% endif %}
+</ul>
+
+<br><h4>Calorie Intake Records:</h4>
+<ul>
+{% if calorielist %}
+    {% for calorie in calorielist %}
+    <li>{{calorie.last_updated}}: {{calorie.calories}} calories</li>
+    {%  endfor  %}
+{% else %}
+    <li>No records stored, add them <a href="{% url 'nutritionLog' %}">here</a></li>
 {% endif %}
 </ul>
 {% endblock content %}
