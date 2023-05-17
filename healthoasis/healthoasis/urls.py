@@ -43,9 +43,9 @@ urlpatterns = [
     
     #Workout URLs
     path('workoutlog/', homeapp.views.workout2, name='workouts'),
-    path('workoutlog/add', homeapp.views.addWorkout2, name='addWorkout'),
-    path('workoutlog/edit', homeapp.views.editWorkout2, name='editWorkout'),
-    path('workoutlog/delete', homeapp.views.deleteWorkout2, name='deleteWorkout'),
+    path('workoutlog/add', homeapp.views.addWorkout, name='addWorkout'),
+    path('workoutlog/edit', homeapp.views.editWorkout, name='editWorkout'),
+    path('workoutlog/delete', homeapp.views.deleteWorkout, name='deleteWorkout'),
     
     #Exercise URLs
     path('workoutlog/search/', homeapp.views.exerciseSearch, name='exerciseSearch'),
@@ -58,6 +58,5 @@ urlpatterns = [
     path('home/about', homeapp.views.about , name='about'),
 
     #Nutrition URLs pertaining to users.
-    path('nutrition/log', homeapp.views.logUserNutrition, name = 'nutritionCreate'),
-    path('nutrition/view', homeapp.views.viewUserNutrition, name = 'nutritionView'),
+    path('nutrition/log', homeapp.views.logUserNutrition, name = 'nutritionLog'),
 ]

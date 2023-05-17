@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from datetime import datetime, timedelta, date
 
 from .models import User, Exercise, UserWorkouts
 
@@ -116,12 +117,10 @@ def results(request):
 def exerciseSearch(request):
     if request.method == 'POST':
         muscle = request.POST.get('query', '')
-        print(muscle)
-        url = 'https://api.api-ninjas.com/v1/exercises?muscle={}'.format(muscle)
-        print(url)
-        response = requests.get(url, headers=APINinjaHeaders)
-        print(response)
-        print(response.status_code)
+        difficulty = request.POST.get('difficulty', '')
+        queryString = {"muscle":muscle, "difficulty":difficulty}
+        url = 'https://api.api-ninjas.com/v1/exercises'
+        response = requests.get(url, headers=APINinjaHeaders, params=queryString)
         if response.status_code == 200:
             results = response.json()
             print(results)
@@ -200,49 +199,51 @@ def progress(request):
     context["workoutlist"] = UserWorkouts.objects.filter(user = request.user.id)
     return render(request, 'progress/progress.html')
 
-
 #View to add a workout
 @login_required
 def addWorkout(request):
-    context = {}
     if request.method == 'POST':
-        user_id = request.POST['user_id']
-        exercise_id = request.POST['exercise_id']
-        date = request.POST['date']
-        duration = request.POST['duration']
-        user = get_object_or_404(User, id=user_id)
-        exercise = get_object_or_404(Exercise, id=exercise_id)
-        workout = UserWorkouts(user = user, exercise=exercise, date=date, duration=duration)
-        workout.save()
-        return redirect('/home')
+        form = UserWorkout(request.POST)
+        if form.is_valid():
+            workout = form.save(commit=False)
+            workout.date = date.today()
+            workout.save()
+            return redirect('home')  
     else:
-        return render(request, 'workoutlog/add.html', context)
+        form = UserWorkout()
 
+    context = {'form': form}
+    return render(request, 'workoutlog/add.html', context)
+    
 #View to edit a workout
-
 @login_required
 def editWorkout(request, workout_id):
-    workout = get_object_or_404(UserWorkouts, id=workout_id)
+    workout = get_object_or_404(Workout, id=workout_id)
+
     if request.method == 'POST':
-        date = request.POST['date']
-        duration = request.POST['duration']
-        workout.date = date
-        workout.duration = duration
-        workout.save()
-        return redirect('/home')
+        form = UserWorkout(request.POST, instance=workout)
+        if form.is_valid():
+            form.save()
+            return redirect('home')  
     else:
-        return render(request, 'workoutlog/edit.html', {'workout': workout})
+        form = UserWorkout(instance=workout)
+
+    context = {'form': form, 'workout': workout}
+    return render(request, 'workoutlog/edit.html', context)
+
 
 #View to delete a workout
 @login_required
+def deleteWorkout(request):
 
-def deleteWorkout(request, workout_id):
-    workout = get_object_or_404(UserWorkouts, id=workout_id)
+    workout = get_object_or_404(Workout)
+
     if request.method == 'POST':
         workout.delete()
-        return redirect('success_page')
-    else:
-        return render(request, 'workoutlog/delete.html', {'workout': workout})
+        return redirect('home')
+
+    context = {'workout': workout}
+    return render(request, 'workoutlog/delete.html', context)
 
 def about(request):
     context = {}
@@ -252,23 +253,31 @@ def about(request):
 def logUserNutrition(request):
     context ={}
     currentUser = get_object_or_404(User, id = request.user.id)
-    form = UserNutritionFormCreate(request.POST or None)
-    if(request.method == 'POST'):
+    form = UserNutritionForm(request.POST or None)
+    if(request.method == 'GET'):
+        try:
+            currentUser = UserNutrition.objects.get(user = currentUser)
+            context['currentUserWeeklyIntake'] =  currentUser
+            messages.add_message(request, messages.ERROR, 'You already have your Weekly Caloric Intake saved, entering in a new value will update you current Weekly Caloric Intake.')
+        except UserNutrition.DoesNotExist:
+            pass
+    elif(request.method == 'POST'):
         if form.is_valid():
-            if(UserNutrition.objects.filter(user = currentUser).exists):
-                messages.add_message(request, messages.ERROR, 'You already have your Nutrition saved, update to change it.')
-            else:
+            try:
+                existingCalorieEntry = UserNutrition.objects.get(user = currentUser)
+                if(existingCalorieEntry.time_since_creation() < 7):
+                    messages.add_message(request, messages.ERROR, 'Cannot update Current Caloric intake; Has not yet been a week.')
+                    return redirect('/nutrition')
+                else:
+                    existingCalorieEntry.calories = form.cleaned_data['calories']
+                    existingCalorieEntry.save() 
+                    messages.add_message(request, messages.SUCCESS, 'Weekly Caloric intake updated.')
+            except UserNutrition.DoesNotExist:
                 form = UserNutrition(calories = form.cleaned_data['calories'], user = request.user)
+                messages.add_message(request, messages.SUCCESS, 'Weekly Caloric intake Logged.')
                 form.save()
-                messages.add_message(request, messages.SUCCESS, 'Nutrition updated.')
-                return redirect('/home')
+            return redirect('/nutrition')
         else:
             messages.add_message(request, messages.ERROR, 'Invalid Form Data; Nutrition not updated.')
     context['form']= form
-    return render(request, "user/logUserNutrition.html", context)
-
-@login_required
-def viewUserNutrition(request):
-    context ={}
-    context["nutrition_list"] = UserNutrition.objects.all()
-    return render(request, "notesapp/index.html", context)
+    return render(request, "userNutrition/logUserNutrition.html", context)

@@ -24,17 +24,27 @@ class BreakfastForm(forms.Form):
         widget=forms.RadioSelect
     )
 
-class UserNutritionFormCreate(forms.ModelForm):
+class UserNutritionForm(forms.ModelForm):
     class Meta:
         model = UserNutrition
 
         fields = ['calories', 'user']
 
         widgets = {
-            'calories' : forms.NumberInput(attrs ={
-                'placeholder' : 'Calories',
+            'calories' : forms.NumberInput(attrs = {
+                'placeholder' : 'kcals',
                 'required' : True,
-                'class' : 'formfield'
+                'class' : 'formfield',
             }),
             'user': forms.HiddenInput(),
         }
+
+class UserWorkout(forms.ModelForm): #UserWorkout class
+    class Meta:
+        model = Workout
+        fields = ['name', 'description']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'formfield'}),
+            'description': forms.Textarea(attrs={'class': 'formfield', 'rows': 2}),
+        }
+ 
