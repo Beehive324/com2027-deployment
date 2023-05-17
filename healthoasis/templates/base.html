@@ -25,17 +25,18 @@
       {% include "navbar.html" %}
     {% block content %}
     {% endblock content %}
+    
     </body>
     <footer>
         <ul>
           <li><a href="#">Terms Of Service</a></li>
-          <li><a href="about">About</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
           <li><a href="#">Contact</a></li>
           <li><a href="#">Socials</a></li>
           <li><a href="#">Careers</a></li>
         </ul>
     </footer> 
-    <div>background-image: url("{% static 'images/healthOlogo2.png' %}");</div>
+   <!-- <div>background-image: url("{% static 'images/healthOlogo2.png' %}");</div>-->
     <style>
         /*healthoasis image*/
 

@@ -222,5 +222,5 @@ def deleteWorkout(request, workout_id):
         return render(request, 'workoutlog/delete.html', {'workout': workout})
 
 def about(request):
-    html = "<html><body>This is the about page</body><html>"
-    return HttpResponse(html)
+    context = {}
+    return render(request, 'homeapp/about.html', context)

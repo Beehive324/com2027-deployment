@@ -51,5 +51,5 @@ urlpatterns = [
     path('progress/', homeapp.views.progress, name='progress'),
 
     #about URL
-    path('about', homeapp.views.about , name='about'),
+    path('home/about', homeapp.views.about , name='about'),
 ]
