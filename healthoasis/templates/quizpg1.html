@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HealthOasis Quiz</title>
+    <style>
+        /* Center align the welcome message */
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Center align the questions */
+        .questions {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Style the question buttons */
+        .question-button {
+            width: 200px;
+            height: 250px; /* Increased height to accommodate input boxes */
+            margin: 10px;
+            border-radius: 50%;
+            background-color: #f2f2f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Style the input boxes */
+        .input-box {
+            margin-top: 10px;
+            width: 100px;
+            height: 30px;
+            border-radius: 15px;
+            border: 1px solid #ccc;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* Center align the next button */
+        .next-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Style the next button */
+        .next-button button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-message">
+        <h1>Hello, (user name)!</h1>
+        <p>Let's start with some simple questions.</p>
+    </div>
+
+    <div class="questions">
+        <div class="question-button">
+            <p>Question 1</p>
+            <img src="stick_figure_scale_image.jpg" alt="Height Image">
+            <input type="text" class="input-box" placeholder="Ft">
+            <input type="text" class="input-box" placeholder="In">
+        </div>
+
+        <div class="question-button">
+            <p>Question 2</p>
+            <img src="weight_scale_image.jpg" alt="Weight Image">
+            <input type="text" class="input-box" placeholder="Kg">
+            <input type="text" class="input-box" placeholder="g">
+        </div>
+
+        <div class="question-button">
+            <p>Question 3</p>
+            <img src="calendar_image.jpg" alt="Calendar Image">
+            <input type="text" class="input-box" placeholder="DOB">
+        </div>
+    </div>
+
+    <div class="next-button">
+        <button onclick="saveAnswers()">Next</button>
+    </div>
+
+    <script>
+        function saveAnswers() {
+            // Retrieve the user's answers from input boxes
+            var heightFeet = document.getElementById("height-feet").value;
+            var heightInches = document.getElementById("height-inches").value;
+            var weightKg = document.getElementById("weight-kg").value;
+            var weightGrams = document.getElementById("weight-grams").value;
+            var dob = document.getElementById("dob").value;
+
+            // Save the answers or perform further actions
+            // ...
+
+            // Redirect to the next page
+            window.location.href = "breakfast.html";
+        }
+    </script>
+</body>
+</html>

@@ -144,6 +144,17 @@ def deleteUser(request):
         return redirect('/home')
     return render(request, "registration/deleteUser.html", context)
 
+def breakfast(request):
+    if request.method == 'POST':
+        form = BreakfastForm(request.POST)
+        if form.is_valid():
+            breakfast_choice = form.cleaned_data['breakfast_choice']
+            # Process the selected breakfast choice here
+            return redirect('lunch_choices')  # Replace 'lunch_choices' with your actual URL name for the lunch choices page
+    else:
+        form = BreakfastForm()
+    
+    return render(request, 'breakfast.html', {'form': form})
 #_____________________________________________________________________
 #View to add a workout(added this just to see the workouts pages -Obi)
 def workout2(request):
@@ -157,13 +168,14 @@ def editWorkout2(request):
 
 def deleteWorkout2(request):
     return render(request, 'workoutlog/delete.html')
-
-
-#View to add a progress (Its empty for now just added it to complete the navbar)
-def progress(request):
-    return render(request, 'progress/progress.html')
 #_____________________________________________________________________
 
+@login_required
+#View to see progress
+def progress(request):
+    context = {}
+    context["workoutlist"] = UserWorkouts.objects.filter(user = request.user.id)
+    return render(request, 'progress/progress.html')
 
 
 #View to add a workout
@@ -208,6 +220,10 @@ def deleteWorkout(request, workout_id):
         return redirect('success_page')
     else:
         return render(request, 'workoutlog/delete.html', {'workout': workout})
+
+def about(request):
+    html = "<html><body>This is the about page</body><html>"
+    return HttpResponse(html)
 
 @login_required
 def logUserNutrition(request):

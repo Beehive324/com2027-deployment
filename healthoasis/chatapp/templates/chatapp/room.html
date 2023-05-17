@@ -72,12 +72,14 @@ form input[type="button"] {
   width: auto;
 }
 </style>
+<section>
  <h1>{{ room_name }}</h1>
  <p>This is an un-moderated channel for {{ room_name }}. Please be respectful of other users.</p>
  <textarea id="chat-log" cols="50" rows="20" readonly="true"></textarea><br><br>
  <input id="chat-message-input" type="text" size="50" placeholder="Your message here">
  <input id="chat-message-submit" type="button" value="Send">
  <input type="hidden" id="room_name" value="{{room_name}}">
+ </section>
  {% block jsincludes %}
  <script>
  $( document ).ready(function() {

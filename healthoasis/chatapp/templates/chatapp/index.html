@@ -3,9 +3,25 @@
  <title>Chat Rooms</title>
 {% endblock title %}
 {% block content %}
+<section>
  <h1>Chat Rooms</h1>
+ <p>HealthOasis supports dynamically created real-time chatrooms. Please note, these chat rooms are not moderated.</p>
+ <p>Choose from one of the pre-defined rooms below:</p>
  <ul>
- <li><a href="{% url 'room' 'General' %}">General Discussion</a></li>
- <li><a href="{% url 'room' 'Support' %}">Support</a></li>
+ <li><a href="{% url 'room' 'general' %}">General Discussion</a></li>
+ <li><a href="{% url 'room' 'support' %}">Support</a></li>
  </ul>
+ <p>Or, make your own room, by typing a name in the box below:</p>
+ <input type="text" id="myInput" placeholder="Room name">
+ <button onclick="redirectToRoom()">Create</button>
+
+</section>
+<script>
+    function redirectToRoom() {
+        var inputVal = document.getElementById('myInput').value;
+        window.location.href = inputVal;
+    }
+</script>
+
+ 
 {% endblock content %}

@@ -5,6 +5,8 @@
 {% endblock title%}
 
 {% block content %}
+<section>
+
 <h1>Nutrition Search</h1>
 <p>Enter a natural language query into the box, to search for nutritional values.</p>
 <form method="post" action="{% url 'search' %}">
@@ -13,4 +15,6 @@
     <button type="submit">Search</button>
 </form>
 <br><p><small>Note: All data is provided by the NutritionIX database. We cannot accept any responsibility for data inaccuracies, nor guarantee every food type/brand exists in the database.</small></p>
+    
+</section>
 {% endblock content %}
