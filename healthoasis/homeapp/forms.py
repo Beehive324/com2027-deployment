@@ -38,3 +38,13 @@ class UserNutritionForm(forms.ModelForm):
             }),
             'user': forms.HiddenInput(),
         }
+
+class UserWorkout(forms.ModelForm): #UserWorkout class
+    class Meta:
+        model = Workout
+        fields = ['name', 'description']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'formfield'}),
+            'description': forms.Textarea(attrs={'class': 'formfield', 'rows': 2}),
+        }
+ 

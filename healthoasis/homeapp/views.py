@@ -222,25 +222,25 @@ def addWorkout(request):
 
 #View to edit a workout
 @login_required
-def editWorkout(request):
-    workout = get_object_or_404(Workout)
+def editWorkout(request, workout_id):
+    workout = get_object_or_404(Workout, id=workout_id)
 
     if request.method == 'POST':
         form = UserWorkout(request.POST, instance=workout)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('home')  
     else:
         form = UserWorkout(instance=workout)
 
-    context = {'form': form}
+    context = {'form': form, 'workout': workout}
     return render(request, 'workoutlog/edit.html', context)
 
 
 #View to delete a workout
 @login_required
 def deleteWorkout(request):
-    # Retrieve the existing workout object from the database
+
     workout = get_object_or_404(Workout)
 
     if request.method == 'POST':
