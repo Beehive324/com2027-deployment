@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 from .models import User, Exercise, UserWorkouts
 
@@ -202,44 +202,53 @@ def progress(request):
 #View to add a workout
 @login_required
 def addWorkout(request):
-    context = {}
     if request.method == 'POST':
-        user_id = request.POST['user_id']
-        exercise_id = request.POST['exercise_id']
-        date = request.POST['date']
-        duration = request.POST['duration']
-        user = get_object_or_404(User, id=user_id)
-        exercise = get_object_or_404(Exercise, id=exercise_id)
-        workout = UserWorkouts(user = user, exercise=exercise, date=date, duration=duration)
-        workout.save()
-        return redirect('/home')
+        form = UserWorkout(request.POST)
+        if form.is_valid():
+            # Create a new Workout object with form data
+            workout = form.save(commit=False)
+            workout.date = date.today()
+            # You can also associate the workout with the current user
+            # workout.user = request.user
+            workout.save()
+
+            # Redirect to a success page or any other desired action
+            return redirect('home')
     else:
-        return render(request, 'workoutlog/add.html', context)
+        form = UserWorkout()
+
+    context = {'form': form}
+    return render(request, 'workoutlog/add.html', context)
 
 #View to edit a workout
 @login_required
-def editWorkout(request, workout_id):
-    workout = get_object_or_404(UserWorkouts, id=workout_id)
+def editWorkout(request):
+    workout = get_object_or_404(Workout)
+
     if request.method == 'POST':
-        date = request.POST['date']
-        duration = request.POST['duration']
-        workout.date = date
-        workout.duration = duration
-        workout.save()
-        return redirect('/home')
+        form = UserWorkout(request.POST, instance=workout)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
     else:
-        return render(request, 'workoutlog/edit.html', {'workout': workout})
+        form = UserWorkout(instance=workout)
+
+    context = {'form': form}
+    return render(request, 'workoutlog/edit.html', context)
+
 
 #View to delete a workout
 @login_required
+def deleteWorkout(request):
+    # Retrieve the existing workout object from the database
+    workout = get_object_or_404(Workout)
 
-def deleteWorkout(request, workout_id):
-    workout = get_object_or_404(UserWorkouts, id=workout_id)
     if request.method == 'POST':
         workout.delete()
-        return redirect('success_page')
-    else:
-        return render(request, 'workoutlog/delete.html', {'workout': workout})
+        return redirect('home')
+
+    context = {'workout': workout}
+    return render(request, 'workoutlog/delete.html', context)
 
 def about(request):
     context = {}
