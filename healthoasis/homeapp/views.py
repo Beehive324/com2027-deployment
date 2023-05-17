@@ -116,12 +116,10 @@ def results(request):
 def exerciseSearch(request):
     if request.method == 'POST':
         muscle = request.POST.get('query', '')
-        print(muscle)
-        url = 'https://api.api-ninjas.com/v1/exercises?muscle={}'.format(muscle)
-        print(url)
-        response = requests.get(url, headers=APINinjaHeaders)
-        print(response)
-        print(response.status_code)
+        difficulty = request.POST.get('difficulty', '')
+        queryString = {"muscle":muscle, "difficulty":difficulty}
+        url = 'https://api.api-ninjas.com/v1/exercises'
+        response = requests.get(url, headers=APINinjaHeaders, params=queryString)
         if response.status_code == 200:
             results = response.json()
             print(results)
