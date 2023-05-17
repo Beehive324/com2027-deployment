@@ -262,3 +262,21 @@ def logUserNutrition(request):
             messages.add_message(request, messages.ERROR, 'Invalid Form Data; Nutrition not updated.')
     context['form']= form
     return render(request, "userNutrition/logUserNutrition.html", context)
+
+@login_required  # Ensures that the user must be logged in to access this page
+def questionnaire_page1(request):
+    if request.method == 'POST':
+        # Handle form submission
+        # Retrieve the user's answers from the request.POST dictionary
+        # Save the answers and redirect to the next page
+        # You can use Django forms or manually handle the form data
+        # Example code:
+        height = request.POST['height']
+        weight = request.POST['weight']
+        date_of_birth = request.POST['date_of_birth']
+        # Save the answers to the database or perform any necessary actions
+        # Redirect to the next page of the questionnaire
+        return redirect('questionnaire_page2')
+
+    # If the request method is GET, render the questionnaire page template
+    return render(request, 'homeapp/questionnaire_page1.html')
