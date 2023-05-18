@@ -6,16 +6,13 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta, date
 from random import choice
 from homeapp.models import BreakfastOption
-
 from .models import User, Exercise, UserWorkouts
-
 from django.shortcuts import get_object_or_404, redirect, render
-
-
-
 from .models import *
 from .forms import *
 
+from django.core.exceptions import PermissionDenied
+from django.urls import reverse_lazy
 import requests
 
 
@@ -98,35 +95,48 @@ def home(request):
     }
     return render(request, 'homeapp/home.html', context)
 
+#View for nutrition search
+@login_required
 def search(request):
     if request.method == 'POST':
+        #Get request
         query = request.POST.get('query', '')
         data = {'query': query}
+        #Pass to API
         response = requests.post(nutritionEndPt, headers=headers, json=data)
-        if response.status_code == 200:
-            results = response.json()
+        if response.status_code == 200: #If successful,
+            results = response.json()   #convert to JSON and pass into template
             return render(request, 'nutrition/results.html', {'results': results})
     return render(request, 'nutrition/search.html')
 
+#View for nutrition search results
+@login_required
 def results(request):
     return render(request, 'nutrition/results.html')
 
+#View for exercise search
+@login_required
 def exerciseSearch(request):
     if request.method == 'POST':
+        #Get request
         muscle = request.POST.get('query', '')
         difficulty = request.POST.get('difficulty', '')
         queryString = {"muscle":muscle, "difficulty":difficulty}
+        #Pass to API
         url = 'https://api.api-ninjas.com/v1/exercises'
         response = requests.get(url, headers=APINinjaHeaders, params=queryString)
-        if response.status_code == 200:
-            results = response.json()
+        if response.status_code == 200: #If successful,
+            results = response.json()   #convert to JSON and pass into template
             print(results)
             return render(request, 'exerciseFinder/results.html', {'results': results})
     return render(request, 'exerciseFinder/search.html')
 
+#View for exercise search results
+@login_required
 def exerciseResults(request):
     return render(request, 'exerciseFinder/results.html')
 
+#View for nutrition page
 @login_required
 def nutrition(request):
     context = {}
@@ -134,6 +144,7 @@ def nutrition(request):
 
 #View to register a user
 class RegisterUser(CreateView):
+    #Setup form
     model = User
     form_class = UserCreationWithEmailForm
     template_name = 'registration/register.html'
@@ -193,53 +204,55 @@ def deleteWorkout2(request):
 #View to see progress
 def progress(request):
     context = {}
-    context["workoutlist"] = UserWorkouts.objects.filter(user = request.user.id)
-    return render(request, 'progress/progress.html')
+    #Get all objects, parse to template
+    context["workoutlist"] = Workout.objects.filter(user=request.user.id)
+    context["calorielist"] = UserNutrition.objects.filter(user = request.user.id)
+    return render(request, 'progress/progress.html', context)
 
 #View to add a workout
 @login_required
 def addWorkout(request):
+    context = {}
+    form = UserWorkout(request.POST or None)
+    context["form"] = form
+    context["form"].fields["user"].initial = request.user.id
     if request.method == 'POST':
-        form = UserWorkout(request.POST)
         if form.is_valid():
-            workout = form.save(commit=False)
-            workout.date = date.today()
-            workout.save()
+            form.save()
             return redirect('home')  
-    else:
-        form = UserWorkout()
-
-    context = {'form': form}
+        else:
+            messages.add_message(request, messages.ERROR, 'Invalid Form Data, workout not created') 
     return render(request, 'workoutlog/add.html', context)
     
 #View to edit a workout
 @login_required
-def editWorkout(request, workout_id):
-    workout = get_object_or_404(Workout, id=workout_id)
-
-    if request.method == 'POST':
-        form = UserWorkout(request.POST, instance=workout)
+def editWorkout(request, wid):
+    context = {}
+    workout = Workout.objects.get(id=wid)
+    form = UserWorkout(request.POST or None, instance=workout)
+    context["form"] = form
+    context["form"].fields["user"].initial = request.user.id
+    if(workout.user == request.user):
         if form.is_valid():
             form.save()
-            return redirect('home')  
+            return redirect('/progress/')  
     else:
-        form = UserWorkout(instance=workout)
-
-    context = {'form': form, 'workout': workout}
+        raise PermissionDenied()
     return render(request, 'workoutlog/edit.html', context)
 
 
 #View to delete a workout
 @login_required
-def deleteWorkout(request):
-
-    workout = get_object_or_404(Workout)
-
-    if request.method == 'POST':
-        workout.delete()
-        return redirect('home')
-
-    context = {'workout': workout}
+def deleteWorkout(request, wid):
+    context = {}
+    workout = Workout.objects.get(id=wid)
+    context["workout"] = workout
+    if(workout.user == request.user):
+        if(request.method == "POST"):
+            workout.delete()
+            return redirect('/progress/')  
+    else:
+        raise PermissionDenied()
     return render(request, 'workoutlog/delete.html', context)
 
 def about(request):

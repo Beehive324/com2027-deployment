@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
-from datetime import datetime
+from datetime import datetime, time
 from django.utils import timezone
 
 
@@ -53,8 +53,6 @@ class ExerciseType(models.Model):
 #each exercise type.
 class Exercise(models.Model):
     name = models.CharField(max_length=50)
-    description = models.TextField()
-    exercise_type = models.ForeignKey(ExerciseType, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -63,6 +61,10 @@ class Exercise(models.Model):
 class Workout(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    date = models.DateField(null=True)
+    time = models.TimeField(default=time(0, 0))
+    exercises = models.ManyToManyField(Exercise, default=10)
 
     def __str__(self):
         return self.name
@@ -80,7 +82,7 @@ class UserWorkouts(models.Model):
 #Model to create a UserNutrition table to store information of the caloric intake of the User.
 class UserNutrition(models.Model):
     calories = models.FloatField(validators=[MinValueValidator(0.0)])
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=False, blank=True, unique = True)
     last_updated = models.DateTimeField(auto_now = True)
 
     def time_since_creation(self):

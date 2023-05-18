@@ -37,16 +37,17 @@ urlpatterns = [
     path('chat/', include('chatapp.urls')),
 
     #Account related URLs:
-    path('accounts/', include('django.contrib.auth.urls')), #Accounts, used to login (accounts/login)
+    
+    path('accounts', include('django.contrib.auth.urls')), #Accounts, used to login (accounts/login)
     path('accounts/signup/', homeapp.views.RegisterUser.as_view(), name='signup_user'), #Signup page
     path('accounts/edit/', homeapp.views.updateUser, name="updateUser"),
     path('accounts/delete/', homeapp.views.deleteUser, name="deleteUser"),
     
     #Workout URLs
     path('workoutlog/', homeapp.views.workout2, name='workouts'),
-    path('workoutlog/add', homeapp.views.addWorkout, name='addWorkout'),
-    path('workoutlog/edit', homeapp.views.editWorkout, name='editWorkout'),
-    path('workoutlog/delete', homeapp.views.deleteWorkout, name='deleteWorkout'),
+    path('workoutlog/add/', homeapp.views.addWorkout, name='addWorkout'),
+    path('workoutlog/edit/<int:wid>/', homeapp.views.editWorkout, name='editWorkout'),
+    path('workoutlog/delete/<int:wid>/', homeapp.views.deleteWorkout, name='deleteWorkout'),
     
     #Exercise URLs
     path('workoutlog/search/', homeapp.views.exerciseSearch, name='exerciseSearch'),
@@ -62,5 +63,5 @@ urlpatterns = [
     path('nutrition/log', homeapp.views.logUserNutrition, name = 'nutritionLog'),
 
     #Questionnaire URLs
-    path('questionnaire/page1/', questionnaire_page1, name='questionnaire_page1'),
+    path('questionnaire/page1/', homeapp.views.questionnaire_page1, name='questionnaire_page1'),
 ]
