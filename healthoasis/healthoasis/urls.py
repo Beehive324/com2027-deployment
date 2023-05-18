@@ -37,6 +37,7 @@ urlpatterns = [
     path('chat/', include('chatapp.urls')),
 
     #Account related URLs:
+    
     path('accounts', include('django.contrib.auth.urls')), #Accounts, used to login (accounts/login)
     path('accounts/signup/', homeapp.views.RegisterUser.as_view(), name='signup_user'), #Signup page
     path('accounts/edit/', homeapp.views.updateUser, name="updateUser"),
