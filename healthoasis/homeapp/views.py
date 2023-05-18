@@ -203,7 +203,7 @@ def deleteWorkout2(request):
 def progress(request):
     context = {}
     #Get all objects, parse to template
-    context["workoutlist"] = UserWorkouts.objects.filter(user = request.user.id)
+    context["workoutlist"] = Workout.objects.all()
     context["calorielist"] = UserNutrition.objects.filter(user = request.user.id)
     return render(request, 'progress/progress.html', context)
 
@@ -226,8 +226,8 @@ def addWorkout(request):
 #View to edit a workout
 @login_required
 def editWorkout(request):
+    print("edit")
     workout = get_object_or_404(Workout)
-
     if request.method == 'POST':
         form = UserWorkout(request.POST, instance=workout)
         if form.is_valid():
