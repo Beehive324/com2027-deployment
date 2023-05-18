@@ -6,13 +6,8 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta, date
 from random import choice
 from homeapp.models import BreakfastOption
-
 from .models import User, Exercise, UserWorkouts
-
 from django.shortcuts import get_object_or_404, redirect, render
-
-
-
 from .models import *
 from .forms import *
 
@@ -98,6 +93,7 @@ def home(request):
     }
     return render(request, 'homeapp/home.html', context)
 
+@login_required
 def search(request):
     if request.method == 'POST':
         query = request.POST.get('query', '')
@@ -108,9 +104,11 @@ def search(request):
             return render(request, 'nutrition/results.html', {'results': results})
     return render(request, 'nutrition/search.html')
 
+@login_required
 def results(request):
     return render(request, 'nutrition/results.html')
 
+@login_required
 def exerciseSearch(request):
     if request.method == 'POST':
         muscle = request.POST.get('query', '')
@@ -124,6 +122,7 @@ def exerciseSearch(request):
             return render(request, 'exerciseFinder/results.html', {'results': results})
     return render(request, 'exerciseFinder/search.html')
 
+@login_required
 def exerciseResults(request):
     return render(request, 'exerciseFinder/results.html')
 

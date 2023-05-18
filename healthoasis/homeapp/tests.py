@@ -5,7 +5,8 @@ from .models import User
 # Create your tests here.
 
 class homeAppTests(TestCase):
-    #Testing the response code of the homepage and (some) details that should be contained within the page.
+    
+    #Set up for testing pages when users are logged in.
     @classmethod
     def setUpTestData(cls):
         user1 = User(username='user1', email='user1@email.com')
