@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}
-<title>Home</title>
+<title>Homepage</title>
 {% endblock title%}
 
 {% block content %}
-<h1>Homepage</h1>
+<h1><style1>HEALTH</style1><style2> OASIS</style2></h1>
+<h2><style3>Health & Well-Being Transformed</style3></h2>
 {% if user.is_authenticated %}
 <section>  
     <h2>Weather</h2>
@@ -26,11 +27,9 @@
     </section>
 {% else %}
 <section>
-   <!-- <form>
-        <input type="email" id="email" name="email" placeholder="EMAIL" required>
-        <br>
-        <input type="password" id="password" name="password" placeholder="PASSWORD" required>
-    </form>-->
+    <div class="style1"><title>Health </title></div>
+          <div class="style2"> <title>Oasis </title></div>
+          <div class="style3"><title>Health & Wellbeing Transformed</title></div>
     <form method="post">
         <!-- Security token -->
         {% csrf_token %}
@@ -47,6 +46,29 @@
       </form>
     <br>
     <style>
+        h1{
+            position: absolute;
+            font-size: 100px;
+            left:395px; top:80px;
+            font-family: "Bank Gothic", Arial, sans-serif;
+        }
+        h2{
+            position: absolute;
+            font-size: 20px;
+            left:585px; top:200px;
+            color:rgb(67, 139, 233);
+            text-shadow: 2px 2px 16px rgba(101, 186, 226, 0.911);
+        }
+        #style1{
+            font-size: 30px;
+            color: #f81111;
+        }
+        #style2{
+            color: green;
+        }
+        #style3{
+            color:aqua;
+        }
         #button1{
         width: 150px;
         height: 40px;
@@ -56,7 +78,7 @@
         border-bottom-right-radius: 15px;
         transition-duration: 0.4s;
         position:absolute; 
-        left:375px; top:250px;
+        left:-695px; top:370px;
         
         }
         #button3{
@@ -68,7 +90,7 @@
         border-bottom-left-radius: 15px;   
         transition-duration: 0.4s;
         position:absolute; 
-        left:582px; top:395px;
+        left:586px; top:407px;
         } 
         #button1:hover {
         background-color: #898f89; 
@@ -140,7 +162,6 @@
         } 
     </style>
     <div class="btn-group">
-       <!-- <button onclick="location.href='/accounts/signup'" id="button2" >LOG IN</button>-->
         <button onclick="location.href='/accounts/signup'" id="button1">SIGN UP</button>
     </div>     
 </section>
