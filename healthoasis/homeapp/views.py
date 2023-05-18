@@ -337,3 +337,34 @@ def get_breakfast_health_level(selected_option):
         return 'Unhealthy'
     else:
         return 'Unknown'
+
+
+@login_required
+def questionnaire_page3(request):
+    if request.method == 'POST':
+        # Handle form submission and redirect to the next page
+        # Retrieve the selected lunch option from the form
+        selected_option = request.POST.get('lunch_option')
+        # Save the selected option and its health level to the database
+        # Example code assuming you have a LunchOption model:
+        lunch_option = LunchOption.objects.create(
+            user=request.user,
+            option=selected_option,
+            health_level=get_lunch_health_level(selected_option)
+        )
+        # Redirect to the next page of the questionnaire
+        return redirect('questionnaire_page4')
+
+    # If the request method is GET, render the questionnaire page template
+    # Generate a random lunch option for each health level
+    healthy_option = choice(LUNCH_OPTIONS_HEALTHY)
+    medium_healthy_option = choice(LUNCH_OPTIONS_MEDIUM_HEALTHY)
+    unhealthy_option = choice(LUNCH_OPTIONS_UNHEALTHY)
+
+    context = {
+        'healthy_option': healthy_option,
+        'medium_healthy_option': medium_healthy_option,
+        'unhealthy_option': unhealthy_option,
+    }
+
+    return render(request, 'homeapp/questionnaire_page3.html', context)

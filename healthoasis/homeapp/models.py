@@ -96,3 +96,8 @@ class BreakfastOption(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     option = models.CharField(max_length=100)
     health_level = models.CharField(max_length=20)
+
+class LunchOption(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    option = models.CharField(max_length=100)
+    health_level = models.CharField(max_length=20)
