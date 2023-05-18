@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
-from datetime import datetime
+from datetime import datetime, time
 from django.utils import timezone
 
 
@@ -63,6 +63,7 @@ class Workout(models.Model):
     description = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     date = models.DateField(null=True)
+    time = models.TimeField(default=time(0, 0))
     exercises = models.ManyToManyField(Exercise, default=10)
 
     def __str__(self):
