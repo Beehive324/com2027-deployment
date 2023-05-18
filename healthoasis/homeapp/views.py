@@ -93,39 +93,48 @@ def home(request):
     }
     return render(request, 'homeapp/home.html', context)
 
+#View for nutrition search
 @login_required
 def search(request):
     if request.method == 'POST':
+        #Get request
         query = request.POST.get('query', '')
         data = {'query': query}
+        #Pass to API
         response = requests.post(nutritionEndPt, headers=headers, json=data)
-        if response.status_code == 200:
-            results = response.json()
+        if response.status_code == 200: #If successful,
+            results = response.json()   #convert to JSON and pass into template
             return render(request, 'nutrition/results.html', {'results': results})
     return render(request, 'nutrition/search.html')
 
+#View for nutrition search results
 @login_required
 def results(request):
     return render(request, 'nutrition/results.html')
 
+#View for exercise search
 @login_required
 def exerciseSearch(request):
     if request.method == 'POST':
+        #Get request
         muscle = request.POST.get('query', '')
         difficulty = request.POST.get('difficulty', '')
         queryString = {"muscle":muscle, "difficulty":difficulty}
+        #Pass to API
         url = 'https://api.api-ninjas.com/v1/exercises'
         response = requests.get(url, headers=APINinjaHeaders, params=queryString)
-        if response.status_code == 200:
-            results = response.json()
+        if response.status_code == 200: #If successful,
+            results = response.json()   #convert to JSON and pass into template
             print(results)
             return render(request, 'exerciseFinder/results.html', {'results': results})
     return render(request, 'exerciseFinder/search.html')
 
+#View for exercise search results
 @login_required
 def exerciseResults(request):
     return render(request, 'exerciseFinder/results.html')
 
+#View for nutrition page
 @login_required
 def nutrition(request):
     context = {}
@@ -133,6 +142,7 @@ def nutrition(request):
 
 #View to register a user
 class RegisterUser(CreateView):
+    #Setup form
     model = User
     form_class = UserCreationWithEmailForm
     template_name = 'registration/register.html'
@@ -192,8 +202,10 @@ def deleteWorkout2(request):
 #View to see progress
 def progress(request):
     context = {}
-    context["workoutlist"] = UserWorkouts.objects.filter(user = request.user.id)
-    return render(request, 'progress/progress.html')
+    #Get all objects, parse to template
+    context["workoutlist"] = Workout.objects.all()
+    context["calorielist"] = UserNutrition.objects.filter(user = request.user.id)
+    return render(request, 'progress/progress.html', context)
 
 #View to add a workout
 @login_required
@@ -214,8 +226,8 @@ def addWorkout(request):
 #View to edit a workout
 @login_required
 def editWorkout(request):
+    print("edit")
     workout = get_object_or_404(Workout)
-
     if request.method == 'POST':
         form = UserWorkout(request.POST, instance=workout)
         if form.is_valid():
