@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Thanks! Now let's talk about your diet.</h1>
+<p>Pick 1 of the 3 options for breakfast choices:</p>
+
+<form method="post" action="{% url 'questionnaire_page2' %}">
+    {% csrf_token %}
+
+    <h3>Option 1 (Healthy):</h3>
+    <input type="radio" name="breakfast_option" value="{{ healthy_option }}" required> {{ healthy_option }}<br>
+
+    <h3>Option 2 (Medium Healthy):</h3>
+    <input type="radio" name="breakfast_option" value="{{ medium_healthy_option }}" required> {{ medium_healthy_option }}<br>
+
+    <h3>Option 3 (Unhealthy):</h3>
+    <input type="radio" name="breakfast_option" value="{{ unhealthy_option }}" required> {{ unhealthy_option }}<br>
+
+    <input type="submit" value="Next">
+</form>
+{% endblock %}

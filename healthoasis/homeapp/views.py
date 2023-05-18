@@ -4,6 +4,8 @@ from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta, date
+from random import choice
+from homeapp.models import BreakfastOption
 
 from .models import User, Exercise, UserWorkouts
 
@@ -15,6 +17,20 @@ from .models import *
 from .forms import *
 
 import requests
+
+
+BREAKFAST_OPTIONS_HEALTHY = [
+    'Oatmeal', 'Whole Grain Bread', 'Boiled Eggs', 'Avocado', 'Apple'
+]
+
+BREAKFAST_OPTIONS_MEDIUM_HEALTHY = [
+    'Bran Flakes', 'Sourdough Bread', 'Scrambled Tofu', 'Baked Beans', 'Greek Yoghurt'
+]
+
+BREAKFAST_OPTIONS_UNHEALTHY = [
+    'Frosted Flakes', 'White Bread', 'Sausage', 'Bacon', 'Hot Chocolate'
+]
+
 
 #WeatherAPI direction dictionary
 dir = {
@@ -280,3 +296,44 @@ def questionnaire_page1(request):
 
     # If the request method is GET, render the questionnaire page template
     return render(request, 'homeapp/questionnaire_page1.html')
+
+
+@login_required
+def questionnaire_page2(request):
+    if request.method == 'POST':
+        # Handle form submission and redirect to the next page
+        # Retrieve the selected breakfast option from the form
+        selected_option = request.POST.get('breakfast_option')
+        # Save the selected option and its health level to the database
+        # Example code assuming you have a BreakfastOption model:
+        breakfast_option = BreakfastOption.objects.create(
+            user=request.user,
+            option=selected_option,
+            health_level=get_breakfast_health_level(selected_option)
+        )
+        # Redirect to the next page of the questionnaire
+        return redirect('questionnaire_page3')
+
+    # If the request method is GET, render the questionnaire page template
+    # Generate a random breakfast option for each health level
+    healthy_option = choice(BREAKFAST_OPTIONS_HEALTHY)
+    medium_healthy_option = choice(BREAKFAST_OPTIONS_MEDIUM_HEALTHY)
+    unhealthy_option = choice(BREAKFAST_OPTIONS_UNHEALTHY)
+
+    context = {
+        'healthy_option': healthy_option,
+        'medium_healthy_option': medium_healthy_option,
+        'unhealthy_option': unhealthy_option,
+    }
+
+    return render(request, 'homeapp/questionnaire_page2.html', context)
+
+def get_breakfast_health_level(selected_option):
+    if selected_option in BREAKFAST_OPTIONS_HEALTHY:
+        return 'Healthy'
+    elif selected_option in BREAKFAST_OPTIONS_MEDIUM_HEALTHY:
+        return 'Medium Healthy'
+    elif selected_option in BREAKFAST_OPTIONS_UNHEALTHY:
+        return 'Unhealthy'
+    else:
+        return 'Unknown'

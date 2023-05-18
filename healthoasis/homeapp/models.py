@@ -90,3 +90,9 @@ class UserNutrition(models.Model):
     
     def __str__(self):
         return str(self.calories) +  " " + str(self.user) + " " + str(self.last_updated)
+
+
+class BreakfastOption(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    option = models.CharField(max_length=100)
+    health_level = models.CharField(max_length=20)
