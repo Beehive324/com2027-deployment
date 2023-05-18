@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
 import homeapp, homeapp.views
+from homeapp.views import questionnaire_page1
 
 urlpatterns = [
     #Admin URL
@@ -36,7 +37,8 @@ urlpatterns = [
     path('chat/', include('chatapp.urls')),
 
     #Account related URLs:
-    path('accounts/', include('django.contrib.auth.urls')), #Accounts, used to login (accounts/login)
+    
+    path('accounts', include('django.contrib.auth.urls')), #Accounts, used to login (accounts/login)
     path('accounts/signup/', homeapp.views.RegisterUser.as_view(), name='signup_user'), #Signup page
     path('accounts/edit/', homeapp.views.updateUser, name="updateUser"),
     path('accounts/delete/', homeapp.views.deleteUser, name="deleteUser"),
@@ -59,4 +61,7 @@ urlpatterns = [
 
     #Nutrition URLs pertaining to users.
     path('nutrition/log', homeapp.views.logUserNutrition, name = 'nutritionLog'),
+
+    #Questionnaire URLs
+    path('questionnaire/page1/', homeapp.views.questionnaire_page1, name='questionnaire_page1'),
 ]

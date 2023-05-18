@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Welcome, {{ request.user.username }}</h1>
+<form method="post" action="{% url 'questionnaire_page1' %}">
+    {% csrf_token %}
+    <!-- Form fields for height, weight, and date of birth -->
+    <label for="height">Height (feet and inches):</label>
+    <input type="text" name="height" required><br>
+
+    <label for="weight">Weight (kg):</label>
+    <input type="text" name="weight" required><br>
+
+    <label for="date_of_birth">Date of Birth:</label>
+    <input type="date" name="date_of_birth" required><br>
+
+    <input type="submit" value="Next">
+</form>
+{% endblock %}
