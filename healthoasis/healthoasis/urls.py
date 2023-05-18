@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
 import homeapp, homeapp.views
-from homeapp.views import questionnaire_page1
+from homeapp.views import questionnaire_page1, questionnaire_page2, questionnaire_page3, questionnaire_page4
 
 urlpatterns = [
     #Admin URL
@@ -63,5 +63,8 @@ urlpatterns = [
     path('nutrition/log', homeapp.views.logUserNutrition, name = 'nutritionLog'),
 
     #Questionnaire URLs
-    path('questionnaire/page1/', homeapp.views.questionnaire_page1, name='questionnaire_page1'),
+    path('questionnaire/page1/', questionnaire_page1, name='questionnaire_page1'),
+    path('questionnaire/page2/', questionnaire_page2, name='questionnaire_page2'),
+    path('questionnaire/page3/', questionnaire_page3, name='questionnaire_page3'),
+    path('questionnaire/page4/', questionnaire_page4, name='questionnaire_page4'),
 ]
