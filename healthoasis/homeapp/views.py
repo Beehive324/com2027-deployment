@@ -11,6 +11,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from .models import *
 from .forms import *
 
+from django.core.exceptions import PermissionDenied
+from django.urls import reverse_lazy
 import requests
 
 
@@ -203,54 +205,54 @@ def deleteWorkout2(request):
 def progress(request):
     context = {}
     #Get all objects, parse to template
-    context["workoutlist"] = Workout.objects.all()
+    context["workoutlist"] = Workout.objects.filter(user=request.user.id)
     context["calorielist"] = UserNutrition.objects.filter(user = request.user.id)
     return render(request, 'progress/progress.html', context)
 
 #View to add a workout
 @login_required
 def addWorkout(request):
+    context = {}
+    form = UserWorkout(request.POST or None)
+    context["form"] = form
+    context["form"].fields["user"].initial = request.user.id
     if request.method == 'POST':
-        form = UserWorkout(request.POST)
         if form.is_valid():
-            workout = form.save(commit=False)
-            workout.date = date.today()
-            workout.save()
+            form.save()
             return redirect('home')  
-    else:
-        form = UserWorkout()
-
-    context = {'form': form}
+        else:
+            messages.add_message(request, messages.ERROR, 'Invalid Form Data, workout not created') 
     return render(request, 'workoutlog/add.html', context)
     
 #View to edit a workout
 @login_required
-def editWorkout(request):
-    print("edit")
-    workout = get_object_or_404(Workout)
-    if request.method == 'POST':
-        form = UserWorkout(request.POST, instance=workout)
+def editWorkout(request, wid):
+    context = {}
+    workout = Workout.objects.get(id=wid)
+    form = UserWorkout(request.POST or None, instance=workout)
+    context["form"] = form
+    context["form"].fields["user"].initial = request.user.id
+    if(workout.user == request.user):
         if form.is_valid():
             form.save()
-            return redirect('home')  
+            return redirect('/progress/')  
     else:
-        form = UserWorkout(instance=workout)
-
-    context = {'form': form, 'workout': workout}
+        raise PermissionDenied()
     return render(request, 'workoutlog/edit.html', context)
 
 
 #View to delete a workout
 @login_required
-def deleteWorkout(request):
-
-    workout = get_object_or_404(Workout)
-
-    if request.method == 'POST':
-        workout.delete()
-        return redirect('home')
-
-    context = {'workout': workout}
+def deleteWorkout(request, wid):
+    context = {}
+    workout = Workout.objects.get(id=wid)
+    context["workout"] = workout
+    if(workout.user == request.user):
+        if(request.method == "POST"):
+            workout.delete()
+            return redirect('/progress/')  
+    else:
+        raise PermissionDenied()
     return render(request, 'workoutlog/delete.html', context)
 
 def about(request):

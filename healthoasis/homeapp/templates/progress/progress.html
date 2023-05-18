@@ -10,7 +10,7 @@
 <ul>
 {% if workoutlist %}
     {% for workout in workoutlist %}
-    <li>ID {{workout.id}}: {{workout.date}} - </li>
+    <li>ID {{workout.id}}: {{workout.date}} - {{workout.name}}.<p>{{workout.time}}: "{{workout.description}}"&nbsp;&nbsp;&nbsp;&nbsp;<small><a href="/workoutlog/edit/{{workout.id}}/">Edit</a>&nbsp;&nbsp;&nbsp;<a href="/workoutlog/delete/{{workout.id}}/">Delete</a></small></p></li>
     {%  endfor  %}
 {% else %}
     <li>No workouts stored, manage them <a href="{% url 'workouts' %}">here</a></li>

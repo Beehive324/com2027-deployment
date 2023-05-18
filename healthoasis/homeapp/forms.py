@@ -42,7 +42,7 @@ class UserNutritionForm(forms.ModelForm):
 class UserWorkout(forms.ModelForm):
     class Meta:
         model = Workout
-        fields = ['name', 'description', 'date', 'time']
+        fields = ['name', 'description', 'date', 'time', 'user']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'formfield'}),
             'description': forms.Textarea(attrs={'class': 'formfield', 'rows': 5}),
