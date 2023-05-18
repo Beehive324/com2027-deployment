@@ -53,8 +53,6 @@ class ExerciseType(models.Model):
 #each exercise type.
 class Exercise(models.Model):
     name = models.CharField(max_length=50)
-    description = models.TextField()
-    exercise_type = models.ForeignKey(ExerciseType, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
