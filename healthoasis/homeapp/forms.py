@@ -38,11 +38,11 @@ class UserNutritionForm(forms.ModelForm):
             }),
             'user': forms.HiddenInput(),
         }
-
+        
 class UserWorkout(forms.ModelForm):
     class Meta:
         model = Workout
-        fields = ['user', 'workout', 'date', 'desc']
+        fields = ['name', 'description', 'date', 'exercises']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'formfield'}),
             'description': forms.Textarea(attrs={'class': 'formfield', 'rows': 5}),
@@ -50,5 +50,6 @@ class UserWorkout(forms.ModelForm):
             'exercises': forms.SelectMultiple(attrs={'class': 'formfield'}),
             'user': forms.HiddenInput(),
         }
+ 
  
  

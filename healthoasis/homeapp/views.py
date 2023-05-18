@@ -214,8 +214,8 @@ def addWorkout(request):
     
 #View to edit a workout
 @login_required
-def editWorkout(request, workout_id):
-    workout = get_object_or_404(Workout, id=workout_id)
+def editWorkout(request):
+    workout = get_object_or_404(Workout)
 
     if request.method == 'POST':
         form = UserWorkout(request.POST, instance=workout)
