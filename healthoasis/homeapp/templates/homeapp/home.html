@@ -26,11 +26,25 @@
     </section>
 {% else %}
 <section>
-    <form>
+   <!-- <form>
         <input type="email" id="email" name="email" placeholder="EMAIL" required>
         <br>
         <input type="password" id="password" name="password" placeholder="PASSWORD" required>
-    </form>
+    </form>-->
+    <form method="post">
+        <!-- Security token -->
+        {% csrf_token %}
+       
+        <div>
+          <input type="email" id="email" name="email" placeholder="EMAIL" required>
+        </div>
+        
+        <div>
+          <input type="password" id="password" name="password" placeholder="PASSWORD" required>
+        </div>
+        
+        <button type="submit" id="button3">LOG IN</button>
+      </form>
     <br>
     <style>
         #button1{
@@ -45,7 +59,7 @@
         left:375px; top:250px;
         
         }
-        #button2{
+        #button3{
         width: 150px;
         height: 40px;
         color:aliceblue;
@@ -54,13 +68,13 @@
         border-bottom-left-radius: 15px;   
         transition-duration: 0.4s;
         position:absolute; 
-        left:225px; top:250px;
+        left:582px; top:395px;
         } 
         #button1:hover {
         background-color: #898f89; 
         color: white;
         }
-        #button2:hover {
+        #button3:hover {
         background-color: #898f89; 
         color: white;
         }
@@ -126,7 +140,7 @@
         } 
     </style>
     <div class="btn-group">
-        <button type="submit" id="button2" >LOG IN</button>
+       <!-- <button onclick="location.href='/accounts/signup'" id="button2" >LOG IN</button>-->
         <button onclick="location.href='/accounts/signup'" id="button1">SIGN UP</button>
     </div>     
 </section>
